@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Users;
 
 use Illuminate\Support\Facades\Auth;
+use  App\Http\Requests\Users\Create as Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -14,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'create']]);
     }
 
     /**
@@ -26,11 +28,33 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Não autorizado.'], 401);
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $data = $request->only(['name', 'email', 'password']);
+            $user = User::create($data);
+
+            return response()->json([
+                'user' => $user,
+                'data' => $data,
+                'message' => 'Usuário cadastrado com sucesso.',
+                'success' => true
+            ], http_response_code(200));
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Houve um problema ao cadastrar o usuário.',
+                'success' => false,
+                'error' => $th->getMessage(),
+                'code' => $th->getCode()
+            ], http_response_code(500));
+        }
     }
 
     /**
@@ -52,7 +76,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Logout efetuado com sucesso.']);
     }
 
     /**
