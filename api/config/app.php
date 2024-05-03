@@ -196,6 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         /**Jwt */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        /**Swagger */
+        L5Swagger\L5SwaggerServiceProvider::class,
 
     ],
 
