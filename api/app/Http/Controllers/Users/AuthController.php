@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Users;
 
-use Illuminate\Support\Facades\Auth;
 use  App\Http\Requests\Users\Create as Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -134,6 +133,7 @@ class AuthController extends Controller
      *      tags={"Autenticação"},
      *      summary="Informações sobre o usuário autenticado.",
      *      description="Informações sobre o usuário autenticado.",
+     *      security={{"bearerAuth": {}}},
      *      @OA\Response(
      *          response=200,
      *          description="Informações do usuário recuperadas com sucesso.",
@@ -192,6 +192,7 @@ class AuthController extends Controller
      *      tags={"Autenticação"},
      *      summary="Restaurar token do usuário.",
      *      description="Restaurar token do usuário.",
+     *      security={{"bearerAuth": {}}},
      *      @OA\Response(
      *          response=200,
      *          description="Informações do usuário recuperadas com sucesso.",

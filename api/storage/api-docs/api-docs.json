@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/",
+            "url": "http://127.0.0.1:8000/",
             "description": "Demo API Server"
         }
     ],
@@ -239,7 +239,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/auth/logout": {
@@ -308,7 +313,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
