@@ -113,14 +113,14 @@ class AuthController extends Controller
                 'data' => $data,
                 'message' => 'Usuário cadastrado com sucesso.',
                 'success' => true
-            ], http_response_code(200));
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Houve um problema ao cadastrar o usuário.',
                 'success' => false,
                 'error' => $th->getMessage(),
                 'code' => $th->getCode()
-            ], http_response_code(500));
+            ], 500);
         }
     }
 
