@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Auth\Users;
+namespace Tests\Feature\Auth\Users;
 
 use Tests\TestCase;
 
