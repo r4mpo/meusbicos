@@ -24,7 +24,6 @@ class VagasController extends Controller
             $descricao_longa = $parametros['descricao_longa'] ?? '';
 
             $por_pagina = $parametros['por_pagina'] ?? 10;
-            $pagina = $parametros['pagina'] ?? 1;
 
             $vagas = DB::table('vagas')
                 ->join('users', 'vagas.user_id', '=', 'users.id')
