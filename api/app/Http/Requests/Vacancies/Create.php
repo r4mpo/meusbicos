@@ -19,7 +19,6 @@ class Create extends FormRequest
             "long_description" => ["required", "max:250", "min:10"],
             "wage" => ["required", "int"],
             "zip_code" => ["required"],
-            "user_id" => ["required", "exists:" . User::class . ',id'],
         ];
     }
 
@@ -40,6 +39,9 @@ class Create extends FormRequest
 
         if ($this->has('zip_code'))
             $input['zip_code'] = preg_replace("/[^0-9]/", "", $this->get('zip_code'));
+
+
+        $input['user_id'] = auth()->id();
 
         $this->replace($input);
     }

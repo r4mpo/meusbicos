@@ -111,7 +111,7 @@ class VacanciesController extends Controller
 
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code', 'user_id');
+        $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code');
 
         try {
             $vacancy = Vacancy::findOrFail($id);

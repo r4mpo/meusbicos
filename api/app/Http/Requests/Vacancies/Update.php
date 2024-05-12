@@ -19,7 +19,6 @@ class Update extends FormRequest
             "long_description" => ["max:250", "min:10"],
             "wage" => ["int"],
             // "zip_code" => ["required"],
-            "user_id" => ["exists:" . User::class . ',id'],
         ];
     }
 
@@ -29,7 +28,6 @@ class Update extends FormRequest
             "max" => "The field :attribute must reach, at most, :max characters",
             "min" => "The field :attribute must reach, at most, :min characters",
             // "required" => "The field :attribute is required, try again",
-            "exists" => "The field :attribute is not valid, does not exist in the related table, try again",
             "integer" => "The field :attribute must be an integer value (in this case, enter the remuneration in cents)",
         ];
     }
@@ -38,8 +36,8 @@ class Update extends FormRequest
     {
         $input = $this->all();
 
-        if ($this->has('cep'))
-            $input['cep'] = preg_replace("/[^0-9]/", "", $this->get('cep'));
+        if ($this->has('zip_code'))
+            $input['zip_code'] = preg_replace("/[^0-9]/", "", $this->get('zip_code'));
 
         $this->replace($input);
     }
