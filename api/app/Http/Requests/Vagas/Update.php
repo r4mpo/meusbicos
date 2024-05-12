@@ -5,7 +5,7 @@ namespace App\Http\Requests\Vagas;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Create extends FormRequest
+class Update extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,11 +15,11 @@ class Create extends FormRequest
     public function rules(): array
     {
         return [
-            "descricao_curta" => ["required", "max:60", "min:5"],
-            "descricao_longa" => ["required", "max:250", "min:10"],
-            "remuneracao" => ["required", "int"],
-            "cep" => ["required"],
-            "user_id" => ["required", "exists:" . User::class . ',id'],
+            "descricao_curta" => ["max:60", "min:5"],
+            "descricao_longa" => ["max:250", "min:10"],
+            "remuneracao" => ["int"],
+            // "cep" => ["required"],
+            "user_id" => ["exists:" . User::class . ',id'],
         ];
     }
 
@@ -28,7 +28,7 @@ class Create extends FormRequest
         return [
             "max" => "O campo :attribute deve atingir, ao máximo, :max caracteres",
             "min" => "O campo :attribute deve atingir, ao mínimo, :min caracteres",
-            "required" => "O campo :attribute é obrigatório, tente novamente",
+            // "required" => "O campo :attribute é obrigatório, tente novamente",
             "exists" => "O campo :attribute é não é válido, não existe na tabela relacionada, tente novamente",
             "integer" => "O campo :attribute deve ser um valor inteiro (neste caso, informe em centavos a remuneração)",
         ];

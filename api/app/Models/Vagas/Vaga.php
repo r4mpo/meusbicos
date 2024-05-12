@@ -11,7 +11,13 @@ class Vaga extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected
+    protected $fillable = [
+        "descricao_curta",
+        "descricao_longa",
+        "remuneracao",
+        "cep",
+        "user_id",
+    ];
 
     public function user(): object
     {

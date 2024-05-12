@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Vagas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Vagas\Create as CreateRequest;
 use App\Models\Vagas\Vaga;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Vagas\Update as UpdateRequest;
+use Illuminate\Http\JsonResponse;
 
 class VagasController extends Controller
 {
-    /**
-     * Retorna todas vagas
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index() // query param optional: ?page=X (x = number page)
     {
         try {
@@ -27,7 +31,8 @@ class VagasController extends Controller
 
             $vagas = DB::table('vagas')
                 ->join('users', 'vagas.user_id', '=', 'users.id')
-                ->select('vagas.*', 'users.name as user');
+                ->select('vagas.*', 'users.name as user')
+                ->whereNull('deleted_at');
 
             if (!empty($cep)) {
                 $vagas = $vagas->where('cep', '=', $cep);
@@ -57,7 +62,7 @@ class VagasController extends Controller
                     'id' => $vaga->id,
                     'descricao_curta' => $vaga->descricao_curta,
                     'descricao_longa' => $vaga->descricao_longa,
-                    'remuneracao' => 'R$' . number_format($vaga->remuneracao, 2, ",", ""),
+                    'remuneracao' => $this->formatar("dinheiro", $vaga->remuneracao),
                     'cep' => $vaga->cep,
                     'user' => $vaga->user,
                 ];
@@ -72,35 +77,62 @@ class VagasController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(CreateRequest $request): JsonResponse
     {
-        //
+        $dados = $request->only('descricao_curta', 'descricao_longa', 'remuneracao', 'cep', 'user_id');
+
+        try {
+            $vaga = Vaga::create($dados);
+        } catch (\Exception $e) {
+            return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
+
+        return response()->json(['data' => $vaga]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        try {
+            $vaga = Vaga::findOrFail($id);
+
+            return response()->json(['data' => [
+                'id' => $vaga->id,
+                'descricao_curta' => $vaga->descricao_curta,
+                'descricao_longa' => $vaga->descricao_longa,
+                'remuneracao' => $this->formatar("dinheiro", $vaga->remuneracao),
+                'cep' => $this->formatar("cep", $vaga->cep),
+                'user' => $vaga->user
+            ]]);
+
+        } catch (\Exception $e) {
+            return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        //
+        $dados = $request->only('descricao_curta', 'descricao_longa', 'remuneracao', 'cep', 'user_id');
+
+        try {
+            $vaga = Vaga::findOrFail($id);
+            $vaga->update($dados);
+        } catch (\Exception $e) {
+            return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
+
+        return response()->json(['data' => $vaga]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        try {
+
+            $vaga = Vaga::findOrFail($id);
+            $vaga->delete();
+
+            return response()->json(['Vaga excluída com sucesso']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
     }
 }
