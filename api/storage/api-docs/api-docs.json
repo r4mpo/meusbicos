@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Meus Bicos",
-        "description": "Documentação da API Laravel da aplicação 'Meus Bicos'.",
+        "title": "My Jobs",
+        "description": "Documentação da API Laravel da aplicação 'My Jobs'.",
         "contact": {
             "email": "erick1souza1ago04@gmail.com"
         },

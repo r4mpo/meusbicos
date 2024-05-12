@@ -15,17 +15,17 @@ class AuthController extends Controller
 
 
     /**
-     * Realiza o login e retorna um token JWT.
+     * Authenticate user.
      *
      * @OA\Post(
      *      path="/api/auth/login",
      *      operationId="login",
-     *      tags={"Autenticação"},
-     *      summary="Realiza o login e retorna um token JWT.",
-     *      description="Realiza o login e retorna um token JWT.",
+     *      tags={"Auth"},
+     *      summary="Authenticate user.",
+     *      description="Authenticate user.",
      *      @OA\RequestBody(
      *          required=true,
-     *          description="Credenciais de login",
+     *          description="login Credentials",
      *          @OA\JsonContent(
      *              required={"email", "password"},
      *              @OA\Property(property="email", type="string", example="giovana@email.com"),
@@ -34,7 +34,7 @@ class AuthController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Token JWT gerado com sucesso.",
+     *          description="Login successfully.",
      *          @OA\JsonContent(
      *              @OA\Property(property="access_token", type="string", example="token"),
      *              @OA\Property(property="token_type", type="string", example="bearer"),
@@ -43,9 +43,9 @@ class AuthController extends Controller
      *      ),
      *      @OA\Response(
      *          response=401,
-     *          description="Credenciais inválidas.",
+     *          description="Invalid Credentials.",
      *          @OA\JsonContent(
-     *              @OA\Property(property="error", type="string", example="Não autorizado")
+     *              @OA\Property(property="error", type="string", example="Not authorized")
      *          )
      *      )
      * )
@@ -57,7 +57,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Não autorizado.'], 401);
+            return response()->json(['error' => 'Not authorized.'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -67,9 +67,9 @@ class AuthController extends Controller
      * @OA\Post(
      *      path="/api/auth/register",
      *      operationId="createUser",
-     *      tags={"Usuários"},
-     *      summary="Cria um novo usuário.",
-     *      description="Cria um novo usuário.",
+     *      tags={"Users"},
+     *      summary="Creates a new user.",
+     *      description="Creates a new user.",
      *      @OA\RequestBody(
      *          required=true,
      *          description="Informações do usuário",
@@ -82,21 +82,21 @@ class AuthController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Usuário cadastrado com sucesso!",
+     *          description="User registered successfully!",
      *          @OA\JsonContent(
      *              @OA\Property(property="user", type="object", example={}),
      *              @OA\Property(property="data", type="object", example={}),
-     *              @OA\Property(property="message", type="string", example="Usuário cadastrado com sucesso!"),
+     *              @OA\Property(property="message", type="string", example="User registered successfully.!"),
      *              @OA\Property(property="success", type="boolean", example=true)
      *          )
      *      ),
      *      @OA\Response(
      *          response=500,
-     *          description="Houve um problema ao cadastrar o usuário :(",
+     *          description="There was a problem registering the user.",
      *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Houve um problema ao cadastrar o usuário :("),
+     *              @OA\Property(property="message", type="string", example="There was a problem registering the user."),
      *              @OA\Property(property="success", type="boolean", example=false),
-     *              @OA\Property(property="error", type="string", example="Detalhes do erro"),
+     *              @OA\Property(property="error", type="string", example="Error details"),
      *              @OA\Property(property="code", type="integer", example=500)
      *          )
      *      )
@@ -111,12 +111,12 @@ class AuthController extends Controller
             return response()->json([
                 'user' => $user,
                 'data' => $data,
-                'message' => 'Usuário cadastrado com sucesso.',
+                'message' => 'User registered successfully.',
                 'success' => true
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Houve um problema ao cadastrar o usuário.',
+                'message' => 'There was a problem registering the user.',
                 'success' => false,
                 'error' => $th->getMessage(),
                 'code' => $th->getCode()
@@ -125,18 +125,18 @@ class AuthController extends Controller
     }
 
     /**
-     * Informações sobre o usuário autenticado.
+     * Information about the authenticated user.
      *
      * @OA\Post(
      *      path="/api/auth/me",
      *      operationId="me",
-     *      tags={"Autenticação"},
-     *      summary="Informações sobre o usuário autenticado.",
-     *      description="Informações sobre o usuário autenticado.",
+     *      tags={"Auth"},
+     *      summary="Information about the authenticated user.",
+     *      description="Information about the authenticated user.",
      *      security={{"bearerAuth": {}}},
      *      @OA\Response(
      *          response=200,
-     *          description="Informações do usuário recuperadas com sucesso.",
+     *          description="User information successfully retrieved.",
      *          @OA\JsonContent(
      *              @OA\Property(property="id", type="integer", example="444"),
      *              @OA\Property(property="name", type="string", example="Giovana"),
@@ -156,20 +156,20 @@ class AuthController extends Controller
     }
 
     /**
-     * Desconecta o usuário e invalida o token JWT.
+     * Logs out the user and invalidates the JWT token.
      *
      * @OA\Post(
      *      path="/api/auth/logout",
      *      operationId="logout",
-     *      tags={"Autenticação"},
-     *      summary="Desconecta o usuário e invalida o token JWT.",
-     *      description="Desconecta o usuário e invalida o token JWT.",
+     *      tags={"Auth"},
+     *      summary="Logs out the user and invalidates the JWT token.",
+     *      description="Logs out the user and invalidates the JWT token.",
      *      security={{"bearerAuth": {}}},
      *      @OA\Response(
      *          response=200,
-     *          description="Usuário desconectado com sucesso.",
+     *          description="User logged out successfully.",
      *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Usuário desconectado com sucesso!")
+     *              @OA\Property(property="message", type="string", example="Logout completed successfully.")
      *          )
      *      )
      * )
@@ -180,22 +180,22 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Logout efetuado com sucesso.']);
+        return response()->json(['message' => 'Logout completed successfully.']);
     }
 
     /**
-     * Restaurar token do usuário.
+     * Restore user token.
      *
      * @OA\Post(
      *      path="/api/auth/refresh",
      *      operationId="refresh",
-     *      tags={"Autenticação"},
-     *      summary="Restaurar token do usuário.",
-     *      description="Restaurar token do usuário.",
+     *      tags={"Auth"},
+     *      summary="Restore user token.",
+     *      description="Restore user token.",
      *      security={{"bearerAuth": {}}},
      *      @OA\Response(
      *          response=200,
-     *          description="Informações do usuário recuperadas com sucesso.",
+     *          description="User information successfully retrieved.",
      *          @OA\JsonContent(
      *              @OA\Property(property="access_token", type="string", example="token"),
      *              @OA\Property(property="token_type", type="string", example="bearer"),
@@ -212,7 +212,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Retorna a resposta com o token JWT.
+     * Returns the response with the JWT token.
      *
      * @param $token
      * @return \Illuminate\Http\JsonResponse

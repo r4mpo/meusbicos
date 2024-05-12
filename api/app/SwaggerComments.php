@@ -5,8 +5,8 @@ namespace App;
 /**
  * @OA\Info(
  *      version="0.0.1",
- *      title="Meus Bicos",
- *      description="Documentação da API Laravel da aplicação 'Meus Bicos'.",
+ *      title="My Jobs",
+ *      description="Laravel API documentation for the 'My Jobs' application.",
  *      @OA\Contact(
  *          email="erick1souza1ago04@gmail.com"
  *      ),
@@ -32,5 +32,8 @@ namespace App;
 
 class SwaggerComments
 {
-    public function documentation(){}
+    public function documentation()
+    {
+        // 
+    }
 }

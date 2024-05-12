@@ -11,36 +11,37 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     /**
-     * Função para formatar Telefone, CEP, CPF, CNPJ e RG
+     * Function to format Telephone, CEP, CPF, CNPJ and RG
      *
-     * Escolher tipo de formatação ( fone, cep, cpf, cnpj ou rg) 
-     * Lembrar de colocar em lowercase
-     * @param $tipo  string
-     *   
-     * Enviar string que para ser formata ex: 13974208014;
-     * @param $string  string   
+     * Choose formatting type (phone, zip code, cpf, cnpj or rg)
+     * Remember to put it in lowercase
+     * @param $type string
      *
-     * Quantidade de caracteres a serem formatados, 
-     * só serve para o telefone 10 para o padrão antigo e 11 para novo padrão com 9
-     * @param $size  integer  
+     * Send string to be formatted ex: 13974208014;
+     * @param $string string
+     *
+     * Number of characters to be formatted,
+     * only fits phone 10 for old standard and 11 for new standard with 9
+     * @param $size integer
      *
      *
-     * Valor formatado do padrão escolhido
-     * @return $string  string   
-     */
-    public function formatar($tipo = "", $string, $size = 10): string
+     * Formatted value of the chosen pattern
+     * @return $string string
+    */    
+
+    public function format($type = "", $string, $size = 10): string
     {
         $string = preg_replace("[^0-9]", "", $string);
 
-        switch ($tipo) {
+        switch ($type) {
 
             case 'fone':
                 if ($size === 10) {
-                    $string = '(' . substr($tipo, 0, 2) . ') ' . substr($tipo, 2, 4)
-                        . '-' . substr($tipo, 6);
+                    $string = '(' . substr($type, 0, 2) . ') ' . substr($type, 2, 4)
+                        . '-' . substr($type, 6);
                 } elseif ($size === 11) {
-                    $string = '(' . substr($tipo, 0, 2) . ') ' . substr($tipo, 2, 5)
-                        . '-' . substr($tipo, 7);
+                    $string = '(' . substr($type, 0, 2) . ') ' . substr($type, 2, 5)
+                        . '-' . substr($type, 7);
                 }
                 break;
 
@@ -48,7 +49,7 @@ class Controller extends BaseController
                 $string = substr($string, 0, 5) . '-' . substr($string, 5, 3);
                 break;
 
-            case 'dinheiro':
+            case 'money':
                 $string = 'R$ ' . number_format(($string / 100), 2, ',', '');
                 break;
 
@@ -69,7 +70,7 @@ class Controller extends BaseController
                 break;
 
             default:
-                $string = 'É ncessário definir um tipo(fone, cep, cpg, cnpj, rg)';
+                $string = 'It is necessary to define a type (fone, cep, cpg, cnpj, rg)';
                 break;
         }
 
