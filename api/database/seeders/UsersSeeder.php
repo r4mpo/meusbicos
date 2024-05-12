@@ -28,6 +28,12 @@ class UsersSeeder extends Seeder
                 'email'=> 'giovana@myjobs.com',
                 'password'=> bcrypt('giovana123'),
             ],
+            [
+                'id'=> 4,
+                'name'=> 'User phpunit',
+                'email' => 'user_phpunit@example.com',
+                'password' => bcrypt('usertEsfww12312dat3#_!.G'),    
+            ]
         ]);
 
     }

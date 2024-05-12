@@ -40,7 +40,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(401)
             ->assertJson([
-                'error' => 'Não autorizado.',
+                'error' => 'Not authorized.',
             ]);
     }
 }

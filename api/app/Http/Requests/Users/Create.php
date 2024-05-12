@@ -25,15 +25,13 @@ class Create extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'O nome de usuário é obrigatório.',
-            'name.max' => 'O nome de usuário deve conter no máximo :max caracteres.',
-
-            'email.required' => 'O e-mail de usuário é obrigatório.',
-            'email.email' => 'O e-mail de usuário não está em um formato válido.',
-            'email.max' => 'O e-mail de usuário deve conter no máximo :max caracteres.',
-            'email.unique' => 'O e-mail do usuário não está disponível para o uso.',
-
-            'password' => 'A senha do usuário é um campo obrigatório.',
+            'name.required' => 'Username is required.',
+            'name.max' => 'The username must contain a maximum of :max characters.',
+            'email.required' => 'User email is required.',
+            'email.email' => 'User email is not in a valid format.',
+            'email.max' => 'The user email must contain a maximum of :max characters.',
+            'email.unique' => 'The users email is not available for use.',
+            'password' => 'The users password is a required field.',
         ];
     }
 

@@ -85,7 +85,7 @@
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Não autorizado"
+                                            "example": "Not authorized."
                                         }
                                     },
                                     "type": "object"
