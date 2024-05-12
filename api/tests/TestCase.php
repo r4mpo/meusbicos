@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
 abstract class TestCase extends BaseTestCase
 {
