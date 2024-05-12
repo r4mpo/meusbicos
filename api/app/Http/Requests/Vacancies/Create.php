@@ -38,8 +38,8 @@ class Create extends FormRequest
     {
         $input = $this->all();
 
-        if ($this->has('cep'))
-            $input['cep'] = preg_replace("/[^0-9]/", "", $this->get('cep'));
+        if ($this->has('zip_code'))
+            $input['zip_code'] = preg_replace("/[^0-9]/", "", $this->get('zip_code'));
 
         $this->replace($input);
     }

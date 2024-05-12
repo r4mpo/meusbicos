@@ -9,7 +9,7 @@ Route::post('documentation', [Swagger::class, 'documentation'])->name('api.docum
 
 Route::group(['middleware' => 'api'], function ($routerVacancy) {
 
-    Route::resource('vacancy', Vacancy::class);
+    Route::resource('vacancies', Vacancy::class);
 
     Route::group(['prefix' => 'auth'], function ($routerAuth) {
         Route::post('login', [Auth::class, 'login'])->name('api.auth.login');

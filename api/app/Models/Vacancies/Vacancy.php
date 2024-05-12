@@ -19,6 +19,8 @@ class Vacancy extends Model
         "user_id",
     ];
 
+    protected $table = "vacancies";
+
     public function user(): object
     {
         return $this->belongsTo(User::class);

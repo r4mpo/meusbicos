@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Vacancies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Vacancies\Create as CreateRequest;
 use App\Models\Vacancies\Vacancy;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Vacancies\Create as CreateRequest;
 use App\Http\Requests\Vacancies\Update as UpdateRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -15,6 +15,7 @@ class VacanciesController extends Controller
     {
         $this->middleware('auth:api');
     }
+
 
     public function index() // query param optional: ?page=X (x = number page)
     {
@@ -62,7 +63,7 @@ class VacanciesController extends Controller
                     'id' => $vacancy->id,
                     'short_description' => $vacancy->short_description,
                     'long_description' => $vacancy->long_description,
-                    'wage' => $this->formatar("money", $vacancy->wage),
+                    'wage' => $this->format("money", $vacancy->wage),
                     'zip_code' => $vacancy->zip_code,
                     'user' => $vacancy->user,
                 ];
@@ -99,11 +100,10 @@ class VacanciesController extends Controller
                 'id' => $vacancy->id,
                 'short_description' => $vacancy->short_description,
                 'long_description' => $vacancy->long_description,
-                'wage' => $this->formatar("money", $vacancy->wage),
-                'zip_code' => $this->formatar("zip_code", $vacancy->zip_code),
+                'wage' => $this->format("money", $vacancy->wage),
+                'zip_code' => $this->format("zip_code", $vacancy->zip_code),
                 'user' => $vacancy->user
             ]]);
-
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
@@ -115,6 +115,13 @@ class VacanciesController extends Controller
 
         try {
             $vacancy = Vacancy::findOrFail($id);
+
+            $userId = auth()->user()->id;
+
+            if ($vacancy->user_id != $userId) {
+                throw new \Exception('not authorized.');
+            }
+
             $vacancy->update($dados);
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
@@ -128,6 +135,13 @@ class VacanciesController extends Controller
         try {
 
             $vacancy = Vacancy::findOrFail($id);
+
+            $userId = auth()->user()->id;
+
+            if ($vacancy->user_id != $userId) {
+                throw new \Exception('not authorized.');
+            }
+
             $vacancy->delete();
 
             return response()->json(['vacancy successfully deleted']);

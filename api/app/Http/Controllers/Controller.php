@@ -11,7 +11,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     /**
-     * Function to format Telephone, CEP, CPF, CNPJ and RG
+     * Function to format Telephone, Zip_Code, CPF, CNPJ and RG
      *
      * Choose formatting type (phone, zip code, cpf, cnpj or rg)
      * Remember to put it in lowercase
@@ -27,7 +27,7 @@ class Controller extends BaseController
      *
      * Formatted value of the chosen pattern
      * @return $string string
-    */    
+     */
 
     public function format($type = "", $string, $size = 10): string
     {
@@ -45,7 +45,7 @@ class Controller extends BaseController
                 }
                 break;
 
-            case 'cep':
+            case 'zip_code':
                 $string = substr($string, 0, 5) . '-' . substr($string, 5, 3);
                 break;
 
@@ -70,7 +70,7 @@ class Controller extends BaseController
                 break;
 
             default:
-                $string = 'It is necessary to define a type (fone, cep, cpg, cnpj, rg)';
+                $string = 'It is necessary to define a type (fone, zip_code, cpg, cnpj, rg)';
                 break;
         }
 

@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "My Jobs",
-        "description": "Documentação da API Laravel da aplicação 'My Jobs'.",
+        "description": "Laravel API documentation for the 'My Jobs' application.",
         "contact": {
             "email": "erick1souza1ago04@gmail.com"
         },
@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/",
+            "url": "http://my-default-host.com",
             "description": "Demo API Server"
         }
     ],
@@ -22,13 +22,13 @@
         "/api/auth/login": {
             "post": {
                 "tags": [
-                    "Autenticação"
+                    "Auth"
                 ],
-                "summary": "Realiza o login e retorna um token JWT.",
-                "description": "Realiza o login e retorna um token JWT.",
+                "summary": "Authenticate user.",
+                "description": "Authenticate user.",
                 "operationId": "login",
                 "requestBody": {
-                    "description": "Credenciais de login",
+                    "description": "login Credentials",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -54,7 +54,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Token JWT gerado com sucesso.",
+                        "description": "Login successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -78,14 +78,14 @@
                         }
                     },
                     "401": {
-                        "description": "Credenciais inválidas.",
+                        "description": "Invalid Credentials.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Not authorized."
+                                            "example": "Not authorized"
                                         }
                                     },
                                     "type": "object"
@@ -99,10 +99,10 @@
         "/api/auth/register": {
             "post": {
                 "tags": [
-                    "Usuários"
+                    "Users"
                 ],
-                "summary": "Cria um novo usuário.",
-                "description": "Cria um novo usuário.",
+                "summary": "Creates a new user.",
+                "description": "Creates a new user.",
                 "operationId": "createUser",
                 "requestBody": {
                     "description": "Informações do usuário",
@@ -136,7 +136,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuário cadastrado com sucesso!",
+                        "description": "User registered successfully!",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151,7 +151,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuário cadastrado com sucesso!"
+                                            "example": "User registered successfully.!"
                                         },
                                         "success": {
                                             "type": "boolean",
@@ -164,14 +164,14 @@
                         }
                     },
                     "500": {
-                        "description": "Houve um problema ao cadastrar o usuário :(",
+                        "description": "There was a problem registering the user.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Houve um problema ao cadastrar o usuário :("
+                                            "example": "There was a problem registering the user."
                                         },
                                         "success": {
                                             "type": "boolean",
@@ -179,7 +179,7 @@
                                         },
                                         "error": {
                                             "type": "string",
-                                            "example": "Detalhes do erro"
+                                            "example": "Error details"
                                         },
                                         "code": {
                                             "type": "integer",
@@ -197,14 +197,14 @@
         "/api/auth/me": {
             "post": {
                 "tags": [
-                    "Autenticação"
+                    "Auth"
                 ],
-                "summary": "Informações sobre o usuário autenticado.",
-                "description": "Informações sobre o usuário autenticado.",
+                "summary": "Information about the authenticated user.",
+                "description": "Information about the authenticated user.",
                 "operationId": "me",
                 "responses": {
                     "200": {
-                        "description": "Informações do usuário recuperadas com sucesso.",
+                        "description": "User information successfully retrieved.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -250,21 +250,21 @@
         "/api/auth/logout": {
             "post": {
                 "tags": [
-                    "Autenticação"
+                    "Auth"
                 ],
-                "summary": "Desconecta o usuário e invalida o token JWT.",
-                "description": "Desconecta o usuário e invalida o token JWT.",
+                "summary": "Logs out the user and invalidates the JWT token.",
+                "description": "Logs out the user and invalidates the JWT token.",
                 "operationId": "logout",
                 "responses": {
                     "200": {
-                        "description": "Usuário desconectado com sucesso.",
+                        "description": "User logged out successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuário desconectado com sucesso!"
+                                            "example": "Logout completed successfully."
                                         }
                                     },
                                     "type": "object"
@@ -283,14 +283,14 @@
         "/api/auth/refresh": {
             "post": {
                 "tags": [
-                    "Autenticação"
+                    "Auth"
                 ],
-                "summary": "Restaurar token do usuário.",
-                "description": "Restaurar token do usuário.",
+                "summary": "Restore user token.",
+                "description": "Restore user token.",
                 "operationId": "refresh",
                 "responses": {
                     "200": {
-                        "description": "Informações do usuário recuperadas com sucesso.",
+                        "description": "User information successfully retrieved.",
                         "content": {
                             "application/json": {
                                 "schema": {
