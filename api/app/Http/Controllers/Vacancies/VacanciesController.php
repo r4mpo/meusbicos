@@ -30,35 +30,35 @@ class VacanciesController extends Controller
 
             $qtd_page = $params['qtd_page'] ?? 10;
 
-            $Vacancies = DB::table('Vacancies')
+            $vacancies = DB::table('Vacancies')
                 ->join('users', 'Vacancies.user_id', '=', 'users.id')
                 ->select('Vacancies.*', 'users.name as user')
                 ->whereNull('deleted_at');
 
             if (!empty($zip_code)) {
-                $Vacancies = $Vacancies->where('zip_code', '=', $zip_code);
+                $vacancies = $vacancies->where('zip_code', '=', $zip_code);
             }
 
             if (!empty($wage)) {
-                $Vacancies = $Vacancies->where('wage', '=', $wage);
+                $vacancies = $vacancies->where('wage', '=', $wage);
             }
 
             if (!empty($short_description)) {
-                $Vacancies = $Vacancies->where('short_description', 'like', $short_description);
+                $vacancies = $vacancies->where('short_description', 'like', $short_description);
             }
 
             if (!empty($long_description)) {
-                $Vacancies = $Vacancies->where('long_description', 'like', $long_description);
+                $vacancies = $vacancies->where('long_description', 'like', $long_description);
             }
 
-            $Vacancies = $Vacancies->orderBy('created_at', 'desc')->paginate($qtd_page);
+            $vacancies = $vacancies->orderBy('created_at', 'desc')->paginate($qtd_page);
 
             $params_url = [
-                'previous' => $Vacancies->previousPageUrl(),
-                'next' => $Vacancies->nextPageUrl(),
+                'previous' => $vacancies->previousPageUrl(),
+                'next' => $vacancies->nextPageUrl(),
             ];
 
-            $Vacancies = $Vacancies->map(function ($vacancy) {
+            $vacancies = $vacancies->map(function ($vacancy) {
                 return [
                     'id' => $vacancy->id,
                     'short_description' => $vacancy->short_description,
@@ -70,7 +70,7 @@ class VacanciesController extends Controller
             });
 
             return response()->json([
-                'data' => $Vacancies,
+                'data' => $vacancies,
                 'pages' => $params_url,
             ]);
         } catch (\Exception $e) {
