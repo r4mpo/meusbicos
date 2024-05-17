@@ -16,8 +16,120 @@ class VacanciesController extends Controller
         $this->middleware('auth:api');
     }
 
-
-    public function index() // query param optional: ?page=X (x = number page)
+    /**
+     * @OA\Get(
+     *      path="/api/vacancies",
+     *      operationId="index",
+     *      tags={"Vacancies"},
+     *      summary="Retrieve a list of vacancies",
+     *      description="Returns a paginated list of vacancies optionally filtered by parameters.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="zip_code",
+     *          in="query",
+     *          description="Filter vacancies by zip code.",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="wage",
+     *          in="query",
+     *          description="Filter vacancies by wage.",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="short_description",
+     *          in="query",
+     *          description="Filter vacancies by short description.",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="long_description",
+     *          in="query",
+     *          description="Filter vacancies by long description.",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="qtd_page",
+     *          in="query",
+     *          description="Number of vacancies per page.",
+     *          @OA\Schema(
+     *              type="integer",
+     *              default=10
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="A paginated list of vacancies.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="id",
+     *                          type="int",
+     *                          description="ID Vacancy.",
+     *                          example="1"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="short_description",
+     *                          type="string",
+     *                          description="Short description of vacancy",
+     *                          example="Test..."
+     *                      ),
+     *                      @OA\Property(
+     *                          property="long_description",
+     *                          type="string",
+     *                          description="Long description of vacancy",
+     *                          example="Test... (long)"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="wage",
+     *                          type="string",
+     *                          description="Wage of vacancy",
+     *                          example="R$ 12409,14"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="zip_code",
+     *                          type="string",
+     *                          description="Zip code (CEP) of vacancy",
+     *                          example="14148-300"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="user",
+     *                          type="string",
+     *                          description="User registered of vacancy",
+     *                          example="Erick Rampo"
+     *                      )
+     *                  )
+     *              ),
+     *              @OA\Property(
+     *                  property="pages",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="previous",
+     *                      type="string",
+     *                      description="Link to the previous page."
+     *                  ),
+     *                  @OA\Property(
+     *                      property="next",
+     *                      type="string",
+     *                      description="Link to the next page."
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function index(): JsonResponse // query param optional: ?page=X (x = number page)
     {
         try {
             $params = request();
@@ -78,6 +190,105 @@ class VacanciesController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/vacancies",
+     *      operationId="store",
+     *      tags={"Vacancies"},
+     *      summary="Create a new vacancy",
+     *      description="Create a new vacancy with the provided data.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="short_description",
+     *                  type="string",
+     *                  description="Short description of the vacancy (between 5 and 60 characters).",
+     *                  example="Test short description"
+     *              ),
+     *              @OA\Property(
+     *                  property="long_description",
+     *                  type="string",
+     *                  description="Long description of the vacancy (between 10 and 250 characters).",
+     *                  example="Test long description"
+     *              ),
+     *              @OA\Property(
+     *                  property="wage",
+     *                  type="integer",
+     *                  description="Wage of the vacancy (in cents).",
+     *                  example="1240914"
+     *              ),
+     *              @OA\Property(
+     *                  property="zip_code",
+     *                  type="string",
+     *                  description="Zip code (CEP) of the vacancy.",
+     *                  example="14148-300"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Vacancy created successfully.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="id",
+     *                      type="integer",
+     *                      description="ID of the created vacancy.",
+     *                      example="8"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="short_description",
+     *                      type="string",
+     *                      description="Short description of the vacancy.",
+     *                      example="Teste"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="long_description",
+     *                      type="string",
+     *                      description="Long description of the vacancy.",
+     *                      example="Teste de uma descrição longa"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="wage",
+     *                      type="string",
+     *                      description="Wage of the vacancy.",
+     *                      example="1240914"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="zip_code",
+     *                      type="string",
+     *                      description="Zip code (CEP) of the vacancy.",
+     *                      example="14315250"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="user_id",
+     *                      type="integer",
+     *                      description="ID of the user creating the vacancy.",
+     *                      example="5"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="updated_at",
+     *                      type="string",
+     *                      format="date-time",
+     *                      description="Date and time of the last update.",
+     *                      example="2024-05-17T00:04:49.000000Z"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="created_at",
+     *                      type="string",
+     *                      format="date-time",
+     *                      description="Date and time of creation.",
+     *                      example="2024-05-17T00:04:49.000000Z"
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
     public function store(CreateRequest $request): JsonResponse
     {
         $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code', 'user_id');
@@ -91,6 +302,75 @@ class VacanciesController extends Controller
         return response()->json(['data' => $vacancy]);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/vacancies/{id}",
+     *      operationId="show",
+     *      tags={"Vacancies"},
+     *      summary="Retrieve a single vacancy",
+     *      description="Retrieve details of a single vacancy by its ID.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the vacancy to retrieve",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Vacancy details retrieved successfully.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="id",
+     *                      type="integer",
+     *                      description="ID of the vacancy.",
+     *                      example="1"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="short_description",
+     *                      type="string",
+     *                      description="Short description of the vacancy.",
+     *                      example="Teste"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="long_description",
+     *                      type="string",
+     *                      description="Long description of the vacancy.",
+     *                      example="Teste de uma descrição longa"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="wage",
+     *                      type="string",
+     *                      description="Wage of the vacancy.",
+     *                      example="R$ 12409,14"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="zip_code",
+     *                      type="string",
+     *                      description="Zip code (CEP) of the vacancy.",
+     *                      example="14148-300"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="user",
+     *                      type="string",
+     *                      description="User registered of the vacancy.",
+     *                      example="Erick Rampo"
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Vacancy not found."
+     *      )
+     * )
+     */
     public function show(string $id): JsonResponse
     {
         try {
@@ -109,6 +389,122 @@ class VacanciesController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *      path="/api/vacancies/{id}",
+     *      operationId="update",
+     *      tags={"Vacancies"},
+     *      summary="Update an existing vacancy",
+     *      description="Update an existing vacancy with the provided data.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the vacancy to be updated",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="short_description",
+     *                  type="string",
+     *                  description="Short description of the vacancy (between 5 and 60 characters).",
+     *                  example="Updated short description"
+     *              ),
+     *              @OA\Property(
+     *                  property="long_description",
+     *                  type="string",
+     *                  description="Long description of the vacancy (between 10 and 250 characters).",
+     *                  example="Updated long description"
+     *              ),
+     *              @OA\Property(
+     *                  property="wage",
+     *                  type="integer",
+     *                  description="Wage of the vacancy (in cents).",
+     *                  example=1500000
+     *              ),
+     *              @OA\Property(
+     *                  property="zip_code",
+     *                  type="string",
+     *                  description="Zip code (CEP) of the vacancy.",
+     *                  example="11020-123"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Vacancy updated successfully.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="id",
+     *                      type="integer",
+     *                      description="ID of the updated vacancy.",
+     *                      example="8"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="short_description",
+     *                      type="string",
+     *                      description="Short description of the vacancy.",
+     *                      example="Updated short description"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="long_description",
+     *                      type="string",
+     *                      description="Long description of the vacancy.",
+     *                      example="Updated long description"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="wage",
+     *                      type="string",
+     *                      description="Wage of the vacancy.",
+     *                      example="1500000"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="zip_code",
+     *                      type="string",
+     *                      description="Zip code (CEP) of the vacancy.",
+     *                      example="11020-123"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="user_id",
+     *                      type="integer",
+     *                      description="ID of the user updating the vacancy.",
+     *                      example="5"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="updated_at",
+     *                      type="string",
+     *                      format="date-time",
+     *                      description="Date and time of the last update.",
+     *                      example="2024-05-17T12:00:00.000000Z"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="created_at",
+     *                      type="string",
+     *                      format="date-time",
+     *                      description="Date and time of creation.",
+     *                      example="2024-05-17T00:00:00.000000Z"
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Unauthorized - The user is not authorized to update this vacancy."
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Vacancy not found."
+     *      )
+     * )
+     */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code');
@@ -130,6 +526,45 @@ class VacanciesController extends Controller
         return response()->json(['data' => $vacancy]);
     }
 
+    /**
+     * @OA\Delete(
+     *      path="/api/vacancies/{id}",
+     *      operationId="destroy",
+     *      tags={"Vacancies"},
+     *      summary="Delete a vacancy",
+     *      description="Delete a vacancy by its ID.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the vacancy to delete",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Vacancy deleted successfully.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  description="Confirmation message.",
+     *                  example="Vacancy successfully deleted."
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Unauthorized - The user is not authorized to delete this vacancy."
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Vacancy not found."
+     *      )
+     * )
+     */
     public function destroy(string $id): JsonResponse
     {
         try {

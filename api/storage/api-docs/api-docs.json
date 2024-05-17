@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://127.0.0.1:8000/",
             "description": "Demo API Server"
         }
     ],
@@ -312,6 +312,485 @@
                                 }
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies": {
+            "get": {
+                "tags": [
+                    "Vacancies"
+                ],
+                "summary": "Retrieve a list of vacancies",
+                "description": "Returns a paginated list of vacancies optionally filtered by parameters.",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "zip_code",
+                        "in": "query",
+                        "description": "Filter vacancies by zip code.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "wage",
+                        "in": "query",
+                        "description": "Filter vacancies by wage.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "short_description",
+                        "in": "query",
+                        "description": "Filter vacancies by short description.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "long_description",
+                        "in": "query",
+                        "description": "Filter vacancies by long description.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "qtd_page",
+                        "in": "query",
+                        "description": "Number of vacancies per page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paginated list of vacancies.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID Vacancy.",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "short_description": {
+                                                        "description": "Short description of vacancy",
+                                                        "type": "string",
+                                                        "example": "Test..."
+                                                    },
+                                                    "long_description": {
+                                                        "description": "Long description of vacancy",
+                                                        "type": "string",
+                                                        "example": "Test... (long)"
+                                                    },
+                                                    "wage": {
+                                                        "description": "Wage of vacancy",
+                                                        "type": "string",
+                                                        "example": "R$ 12409,14"
+                                                    },
+                                                    "zip_code": {
+                                                        "description": "Zip code (CEP) of vacancy",
+                                                        "type": "string",
+                                                        "example": "14148-300"
+                                                    },
+                                                    "user": {
+                                                        "description": "User registered of vacancy",
+                                                        "type": "string",
+                                                        "example": "Erick Rampo"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pages": {
+                                            "properties": {
+                                                "previous": {
+                                                    "description": "Link to the previous page.",
+                                                    "type": "string"
+                                                },
+                                                "next": {
+                                                    "description": "Link to the next page.",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Vacancies"
+                ],
+                "summary": "Create a new vacancy",
+                "description": "Create a new vacancy with the provided data.",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "short_description": {
+                                        "description": "Short description of the vacancy (between 5 and 60 characters).",
+                                        "type": "string",
+                                        "example": "Test short description"
+                                    },
+                                    "long_description": {
+                                        "description": "Long description of the vacancy (between 10 and 250 characters).",
+                                        "type": "string",
+                                        "example": "Test long description"
+                                    },
+                                    "wage": {
+                                        "description": "Wage of the vacancy (in cents).",
+                                        "type": "integer",
+                                        "example": "1240914"
+                                    },
+                                    "zip_code": {
+                                        "description": "Zip code (CEP) of the vacancy.",
+                                        "type": "string",
+                                        "example": "14148-300"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vacancy created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the created vacancy.",
+                                                    "type": "integer",
+                                                    "example": "8"
+                                                },
+                                                "short_description": {
+                                                    "description": "Short description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Teste"
+                                                },
+                                                "long_description": {
+                                                    "description": "Long description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Teste de uma descrição longa"
+                                                },
+                                                "wage": {
+                                                    "description": "Wage of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "1240914"
+                                                },
+                                                "zip_code": {
+                                                    "description": "Zip code (CEP) of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "14315250"
+                                                },
+                                                "user_id": {
+                                                    "description": "ID of the user creating the vacancy.",
+                                                    "type": "integer",
+                                                    "example": "5"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Date and time of the last update.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-17T00:04:49.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "description": "Date and time of creation.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-17T00:04:49.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies/{id}": {
+            "get": {
+                "tags": [
+                    "Vacancies"
+                ],
+                "summary": "Retrieve a single vacancy",
+                "description": "Retrieve details of a single vacancy by its ID.",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vacancy to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vacancy details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the vacancy.",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "short_description": {
+                                                    "description": "Short description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Teste"
+                                                },
+                                                "long_description": {
+                                                    "description": "Long description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Teste de uma descrição longa"
+                                                },
+                                                "wage": {
+                                                    "description": "Wage of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "R$ 12409,14"
+                                                },
+                                                "zip_code": {
+                                                    "description": "Zip code (CEP) of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "14148-300"
+                                                },
+                                                "user": {
+                                                    "description": "User registered of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Erick Rampo"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vacancy not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Vacancies"
+                ],
+                "summary": "Update an existing vacancy",
+                "description": "Update an existing vacancy with the provided data.",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vacancy to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "short_description": {
+                                        "description": "Short description of the vacancy (between 5 and 60 characters).",
+                                        "type": "string",
+                                        "example": "Updated short description"
+                                    },
+                                    "long_description": {
+                                        "description": "Long description of the vacancy (between 10 and 250 characters).",
+                                        "type": "string",
+                                        "example": "Updated long description"
+                                    },
+                                    "wage": {
+                                        "description": "Wage of the vacancy (in cents).",
+                                        "type": "integer",
+                                        "example": 1500000
+                                    },
+                                    "zip_code": {
+                                        "description": "Zip code (CEP) of the vacancy.",
+                                        "type": "string",
+                                        "example": "11020-123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vacancy updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the updated vacancy.",
+                                                    "type": "integer",
+                                                    "example": "8"
+                                                },
+                                                "short_description": {
+                                                    "description": "Short description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Updated short description"
+                                                },
+                                                "long_description": {
+                                                    "description": "Long description of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "Updated long description"
+                                                },
+                                                "wage": {
+                                                    "description": "Wage of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "1500000"
+                                                },
+                                                "zip_code": {
+                                                    "description": "Zip code (CEP) of the vacancy.",
+                                                    "type": "string",
+                                                    "example": "11020-123"
+                                                },
+                                                "user_id": {
+                                                    "description": "ID of the user updating the vacancy.",
+                                                    "type": "integer",
+                                                    "example": "5"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Date and time of the last update.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-17T12:00:00.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "description": "Date and time of creation.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-05-17T00:00:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized - The user is not authorized to update this vacancy."
+                    },
+                    "404": {
+                        "description": "Vacancy not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Vacancies"
+                ],
+                "summary": "Delete a vacancy",
+                "description": "Delete a vacancy by its ID.",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vacancy to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vacancy deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Confirmation message.",
+                                            "type": "string",
+                                            "example": "Vacancy successfully deleted."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized - The user is not authorized to delete this vacancy."
+                    },
+                    "404": {
+                        "description": "Vacancy not found."
                     }
                 },
                 "security": [
