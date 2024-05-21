@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Users;
 
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
@@ -20,6 +21,8 @@ class CreateTest extends TestCase
             'email' => 'user_phpunit2@example.com',
             'password' => 'usertEsfww12312dat3#_!.G2',
         ]);
+
+        Cache::put('user_php_unit', ['email' => 'user_phpunit2@example.com', 'password' => 'usertEsfww12312dat3#_!.G2']);
 
         $response->assertStatus(200)
             ->assertJsonStructure([

@@ -3,6 +3,7 @@
 namespace Tests\Unit\Users\Auth;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\Cache;
 
 class RefreshTest extends TestCase
 {
@@ -14,7 +15,7 @@ class RefreshTest extends TestCase
      */
     public function testRefresh(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token, 'Accept' => 'application/json'])->postJson(route("api.auth.refresh"));
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . Cache::get("token_php_unit"), 'Accept' => 'application/json'])->postJson(route("api.auth.refresh"));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -22,5 +23,8 @@ class RefreshTest extends TestCase
                 "token_type",
                 "expires_in"
             ]);
+
+        $result = $response->json();
+        Cache::put('token_php_unit', $result["access_token"], now()->addMinutes(1));
     }
 }

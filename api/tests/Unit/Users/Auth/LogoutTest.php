@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Users\Auth;
 
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class LogoutTest extends TestCase
@@ -14,7 +15,7 @@ class LogoutTest extends TestCase
     */
     public function testLogout(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token, 'Accept' => 'application/json'])->postJson(route("api.auth.logout"));
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . Cache::get("token_php_unit"), 'Accept' => 'application/json'])->postJson(route("api.auth.logout"));
 
         $response->assertStatus(200)
             ->assertJsonStructure([

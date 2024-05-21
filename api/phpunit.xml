@@ -5,22 +5,27 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="myJobs">
+            <file>./tests/Feature/Users/CreateTest.php</file>
+            <file>./tests/Feature/Users/Auth/LoginTest.php</file>
+            <file>./tests/Feature/Users/CreateTest.php</file>
+            <file>./tests/Feature/Vacancies/CreateTest.php</file>
+            <file>./tests/Unit/Users/Auth/RefreshTest.php</file>
+            <file>./tests/Unit/Users/Auth/MeTest.php</file>
+            <file>./tests/Unit/Users/Auth/LogoutTest.php</file>
         </testsuite>
     </testsuites>
+
     <coverage>
         <include>
             <directory suffix=".php">./app</directory>
         </include>
     </coverage>
+    
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
+        <env name="CACHE_DRIVER" value="file"/>
         <env name="DB_CONNECTION" value="mysql"/>
         <env name="DB_DATABASE" value="meusbicos_bd"/>
         <env name="MAIL_MAILER" value="array"/>

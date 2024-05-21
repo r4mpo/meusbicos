@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth\Users;
 
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -13,10 +14,7 @@ class LoginTest extends TestCase
      */
     public function testLoginWithValidCredentials(): void
     {
-        $response = $this->postJson(route("api.auth.login"), [
-            'email' => 'user_phpunit@example.com',
-            'password' => 'usertEsfww12312dat3#_!.G',
-        ]);
+        $response = $this->postJson(route("api.auth.login"), Cache::get("user_php_unit"));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -24,6 +22,10 @@ class LoginTest extends TestCase
                 'token_type',
                 'expires_in',
             ]);
+
+        $result = $response->json();
+
+        Cache::put('token_php_unit', $result["access_token"], now()->addMinutes(1));
     }
 
     /**
