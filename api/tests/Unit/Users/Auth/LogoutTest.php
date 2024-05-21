@@ -12,7 +12,7 @@ class LogoutTest extends TestCase
      * Neste endpoint, faz-se necessário passar o token
      * 
      * @return void
-    */
+     */
     public function testLogout(): void
     {
         $response = $this->withHeaders(['Authorization' => 'Bearer ' . Cache::get("token_php_unit"), 'Accept' => 'application/json'])->postJson(route("api.auth.logout"));
@@ -21,5 +21,9 @@ class LogoutTest extends TestCase
             ->assertJsonStructure([
                 "message",
             ]);
+
+        // Cache clear
+        Cache::forget("token_php_unit");
+        Cache::forget("user_php_unit");
     }
 }

@@ -25,7 +25,7 @@ class LoginTest extends TestCase
 
         $result = $response->json();
 
-        Cache::put('token_php_unit', $result["access_token"], now()->addMinutes(1));
+        Cache::put('token_php_unit', $result["access_token"]);
     }
 
     /**
