@@ -5,17 +5,17 @@ namespace Tests\Feature\Vacancies;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
-class CreateTest extends TestCase
+class SearchTest extends TestCase
 {
     /**
-     * Testar endpoint de criação de vagas
+     * Testar endpoint de pesquisa de vagas
      * Espera-se o retorno positivo
      * 
      * @return void
      */
-    public function testCreateVacancies(): void
+    public function testSearchVacancies(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . Cache::get("token_php_unit"), 'Accept' => 'application/json'])->postJson(env('APP_URL') . '/api/vacancies', [
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . Cache::get("token_php_unit"), 'Accept' => 'application/json'])->getJson(env('APP_URL') . '/api/vacancies', [
             'short_description' => 'Exemplo com php unit',
             'long_description' => 'Exemplo gerado com phpunit de longas descrições',
             'wage' => '120000',
@@ -24,10 +24,8 @@ class CreateTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                "data"
-        ]);
-
-        $result = $response->json();
-        Cache::put('vacancy_id_php_unit', $result["data"]["id"]);
+                "data",
+                "pages"
+            ]);
     }
 }

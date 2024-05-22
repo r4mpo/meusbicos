@@ -25,5 +25,6 @@ class LogoutTest extends TestCase
         // Cache clear
         Cache::forget("token_php_unit");
         Cache::forget("user_php_unit");
+        Cache::forget("vacancy_id_php_unit");
     }
 }
