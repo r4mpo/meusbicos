@@ -5,7 +5,7 @@ use App\Http\Controllers\Vacancies\VacanciesController as Vacancy;
 use App\SwaggerComments as Swagger;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VacanciesUsers\MyPublishedVacanciesController as MyPublishedVacancies;
-use App\Http\Controllers\VacanciesUsers\VacanciesApplications as Applications;
+use App\Http\Controllers\VacanciesUsers\VacanciesApplicationsController as Applications;
 
 Route::post('documentation', [Swagger::class, 'documentation'])->name('api.documentation.swagger');
 

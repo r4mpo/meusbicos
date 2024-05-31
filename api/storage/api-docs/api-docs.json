@@ -321,6 +321,243 @@
                 ]
             }
         },
+        "/api/vacancies_user/my_published_vacancies": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Retrieve a list of vacancies published by the authenticated user",
+                "description": "Returns a list of vacancies published by the authenticated user.",
+                "operationId": "myPublishedVacancies",
+                "responses": {
+                    "200": {
+                        "description": "A list of vacancies published by the authenticated user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID Vacancy.",
+                                                        "type": "integer",
+                                                        "example": "2"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "Creation timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "Update timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "short_description": {
+                                                        "description": "Short description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "test update"
+                                                    },
+                                                    "long_description": {
+                                                        "description": "Long description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "Fazendo teste de tal tal tal."
+                                                    },
+                                                    "wage": {
+                                                        "description": "Wage of vacancy.",
+                                                        "type": "integer",
+                                                        "example": 777
+                                                    },
+                                                    "zip_code": {
+                                                        "description": "Zip code (CEP) of vacancy.",
+                                                        "type": "string",
+                                                        "example": "12345678"
+                                                    },
+                                                    "user_id": {
+                                                        "description": "User ID who published the vacancy.",
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "deleted_at": {
+                                                        "description": "Deletion timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": null
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies_user/my_applications_vacancies": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Retrieve a list of vacancies published by the authenticated user",
+                "description": "Returns a list of vacancies published by the authenticated user.",
+                "operationId": "myApplications",
+                "responses": {
+                    "200": {
+                        "description": "A list of vacancies published by the authenticated user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID Vacancy.",
+                                                        "type": "integer",
+                                                        "example": "2"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "Creation timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "Update timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "short_description": {
+                                                        "description": "Short description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "test update"
+                                                    },
+                                                    "long_description": {
+                                                        "description": "Long description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "Fazendo teste de tal tal tal."
+                                                    },
+                                                    "wage": {
+                                                        "description": "Wage of vacancy.",
+                                                        "type": "integer",
+                                                        "example": 777
+                                                    },
+                                                    "zip_code": {
+                                                        "description": "Zip code (CEP) of vacancy.",
+                                                        "type": "string",
+                                                        "example": "12345678"
+                                                    },
+                                                    "user_id": {
+                                                        "description": "User ID who published the vacancy.",
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "deleted_at": {
+                                                        "description": "Deletion timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": null
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies_user/to_apply_or_unapply/{vacancy_id}/{action}": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Apply or unapply to a vacancy",
+                "description": "Apply or unapply to a specific vacancy.",
+                "operationId": "toApplyOrUnapply",
+                "parameters": [
+                    {
+                        "name": "vacancy_id",
+                        "in": "path",
+                        "description": "ID of the vacancy.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Action to perform (attach or detach).",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "attach",
+                                "detach"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message confirming the action.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User John applied to Vacancy XYZ"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Invalid data or action provided.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid data or action provided."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/vacancies": {
             "get": {
                 "tags": [

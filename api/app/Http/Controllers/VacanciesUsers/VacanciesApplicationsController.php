@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\VacanciesUsers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vacancies\Vacancy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MyPublishedVacanciesController extends Controller
+class VacanciesApplicationsController extends Controller
 {
     public function __construct()
     {
@@ -16,8 +17,8 @@ class MyPublishedVacanciesController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/vacancies_user/my_published_vacancies",
-     *      operationId="myPublishedVacancies",
+     *      path="/api/vacancies_user/my_applications_vacancies",
+     *      operationId="myApplications",
      *      tags={"VacanciesUsers"},
      *      summary="Retrieve a list of vacancies published by the authenticated user",
      *      description="Returns a list of vacancies published by the authenticated user.",
@@ -90,13 +91,84 @@ class MyPublishedVacanciesController extends Controller
      *      )
      * )
      */
-    public function myPublishedVacancies(): JsonResponse
+    public function myApplications(): JsonResponse
     {
         $user = Auth::user();
-        $vacancies = $user->getVacanciesWithMyUserId;
+        $vacancies = $user->vacancy;
 
         return response()->json([
             'data' => $vacancies
         ]);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/vacancies_user/to_apply_or_unapply/{vacancy_id}/{action}",
+     *      operationId="toApplyOrUnapply",
+     *      tags={"VacanciesUsers"},
+     *      summary="Apply or unapply to a vacancy",
+     *      description="Apply or unapply to a specific vacancy.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="vacancy_id",
+     *          in="path",
+     *          description="ID of the vacancy.",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="action",
+     *          in="path",
+     *          description="Action to perform (attach or detach).",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"attach", "detach"}
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success message confirming the action.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="User John applied to Vacancy XYZ"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Invalid data or action provided.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="Invalid data or action provided."
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function toApplyOrUnapply($vacancy_id, $action): JsonResponse
+    {
+        $user = Auth::user();
+        $vacancy = Vacancy::findOrFail($vacancy_id);
+
+        if (empty($user) || empty($vacancy)) {
+            throw new \Exception('invalid data');
+        }
+
+        $action = strtolower($action);
+
+        if ($action != 'attach' && $action != 'detach') {
+            throw new \Exception('invalid action');
+        }
+
+        $user->vacancy()->$action($vacancy_id);
+
+        return response()->json(['user ' . $user->name . ' ' . ($action == 'attach' ? 'applied' : 'disappointed') . ' to ' . $vacancy->short_description]);
     }
 }
