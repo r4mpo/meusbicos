@@ -8,8 +8,8 @@ use Tests\TestCase;
 class ToApplyOrUnapplyTest extends TestCase
 {
     /**
-     * Testar endpoint para aplicar a uma vaga
-     * Espera-se o retorno positivo
+     * Test endpoint to apply to a vacancy
+     * Positive feedback expected
      * 
      * @return void
      */
@@ -19,19 +19,19 @@ class ToApplyOrUnapplyTest extends TestCase
             'Authorization' => 'Bearer ' . Cache::get("token_php_unit"),
             'Accept' => 'application/json'
         ])->getJson(route('api.vacancies_user.to_apply_or_unapply', [
-            'vacancy_id' => '1', // testamos com a primeira vaga criada pelos seed
+            'vacancy_id' => '1', // we tested with the first vacancy created by the seeds
             'action' => 'attach'
         ]));
 
         $response->assertStatus(200)
             ->assertJson([
-                'user PHPUnit User 2 applied to Desenvolvimento de site institucional'
+                'user PHPUnit User 2 applied to Institutional website development'
             ]);
     }
 
     /**
-     * Testar endpoint para desaplicar a uma vaga
-     * Espera-se o retorno positivo
+     * Test endpoint to disapply to a vacancy
+     * Positive feedback expected
      * 
      * @return void
      */
@@ -41,13 +41,13 @@ class ToApplyOrUnapplyTest extends TestCase
             'Authorization' => 'Bearer ' . Cache::get("token_php_unit"),
             'Accept' => 'application/json'
         ])->getJson(route('api.vacancies_user.to_apply_or_unapply', [
-            'vacancy_id' => '1', // testamos com a primeira vaga criada pelos seed
+            'vacancy_id' => '1', // we tested with the first vacancy created by the seeds
             'action' => 'detach'
         ]));
 
         $response->assertStatus(200)
             ->assertJson([
-                'user PHPUnit User 2 disappointed to Desenvolvimento de site institucional'
+                'user PHPUnit User 2 disappointed to Institutional website development'
             ]);
     }
 }

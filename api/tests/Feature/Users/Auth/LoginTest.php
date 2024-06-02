@@ -8,7 +8,7 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
     /**
-     * Testar o endpoint de login com credenciais válidas.
+     * Test the login endpoint with valid credentials.
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class LoginTest extends TestCase
     }
 
     /**
-     * Testar o endpoint de login com credenciais inválidas.
+     * Test the login endpoint with invalid credentials.
      *
      * @return void
      */

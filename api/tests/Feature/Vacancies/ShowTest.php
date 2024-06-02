@@ -8,8 +8,8 @@ use Tests\TestCase;
 class ShowTest extends TestCase
 {
     /**
-     * Testar endpoint de pesquisa individual de vagas
-     * Espera-se o retorno positivo
+     * Test individual job search endpoint
+     * Positive feedback expected
      * 
      * @return void
      */

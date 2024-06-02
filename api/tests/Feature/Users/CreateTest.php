@@ -8,9 +8,9 @@ use Tests\TestCase;
 class CreateTest extends TestCase
 {
     /**
-     * Testar endpoint de criação de usuários
-     * Neste, em específico, passamos dados válidos
-     * Espera-se o retorno positivo
+     * Test user creation endpoint
+     * In this specific case, we pass valid data
+     * Positive feedback expected
      * 
      * @return void
      */
@@ -35,9 +35,9 @@ class CreateTest extends TestCase
 
 
     /**
-     * Testar endpoint de criação de usuários
-     * Neste, em específico, passamos dados inválidos
-     * Espera-se o retorno negativo
+     * Test user creation endpoint
+     * In this specific case, we passed invalid data
+     * Negative feedback is expected
      * 
      * @return void
      */

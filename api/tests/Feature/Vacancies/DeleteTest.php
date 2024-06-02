@@ -8,8 +8,8 @@ use Tests\TestCase;
 class DeleteTest extends TestCase
 {
     /**
-     * Testar endpoint exclusão de vagas
-     * Espera-se o retorno positivo
+     * Test job deletion endpoint
+     * Positive feedback expected
      * 
      * @return void
      */

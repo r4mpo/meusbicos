@@ -8,8 +8,8 @@ use Tests\TestCase;
 class MeTest extends TestCase
 {
     /**
-     * Capturando dados de um usuário logado
-     * Neste endpoint, faz-se necessário passar o token
+     * Capturing data from a logged in user
+     * At this endpoint, it is necessary to pass the token
      * 
      * @return void
     */

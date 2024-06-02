@@ -8,8 +8,8 @@ use Tests\TestCase;
 class LogoutTest extends TestCase
 {
     /**
-     * Desconecta um usuário logado
-     * Neste endpoint, faz-se necessário passar o token
+     * Log out a logged in user
+     * At this endpoint, it is necessary to pass the token
      * 
      * @return void
      */
