@@ -485,7 +485,7 @@
                 ]
             }
         },
-        "/api/vacancies_user/to_apply_or_unapply/{vacancy_id}/{action}": {
+        "/api/vacancies_user/to_apply_or_unapply/{vacancy_id}": {
             "get": {
                 "tags": [
                     "VacanciesUsers"
@@ -505,7 +505,7 @@
                     },
                     {
                         "name": "action",
-                        "in": "path",
+                        "in": "query",
                         "description": "Action to perform (attach or detach).",
                         "required": true,
                         "schema": {

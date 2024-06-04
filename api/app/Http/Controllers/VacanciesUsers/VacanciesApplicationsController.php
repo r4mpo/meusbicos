@@ -103,7 +103,7 @@ class VacanciesApplicationsController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/vacancies_user/to_apply_or_unapply/{vacancy_id}/{action}",
+     *      path="/api/vacancies_user/to_apply_or_unapply/{vacancy_id}",
      *      operationId="toApplyOrUnapply",
      *      tags={"VacanciesUsers"},
      *      summary="Apply or unapply to a vacancy",
@@ -120,7 +120,7 @@ class VacanciesApplicationsController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="action",
-     *          in="path",
+     *          in="query",
      *          description="Action to perform (attach or detach).",
      *          required=true,
      *          @OA\Schema(
@@ -152,7 +152,7 @@ class VacanciesApplicationsController extends Controller
      *      )
      * )
      */
-    public function toApplyOrUnapply($vacancy_id, $action): JsonResponse
+    public function toApplyOrUnapply($vacancy_id): JsonResponse
     {
         $user = Auth::user();
         $vacancy = Vacancy::findOrFail($vacancy_id);
@@ -161,7 +161,9 @@ class VacanciesApplicationsController extends Controller
             throw new \Exception('invalid data');
         }
 
-        $action = strtolower($action);
+        if ($action = request('action')) {
+            $action = empty($action) ? '' : strtolower($action);
+        }
 
         if ($action != 'attach' && $action != 'detach') {
             throw new \Exception('invalid action');
