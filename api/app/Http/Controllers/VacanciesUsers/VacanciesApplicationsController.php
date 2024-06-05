@@ -63,8 +63,8 @@ class VacanciesApplicationsController extends Controller
      *                      ),
      *                      @OA\Property(
      *                          property="wage",
-     *                          type="integer",
-     *                          example=777,
+     *                          type="string",
+     *                          example="R$ 7,77",
      *                          description="Wage of vacancy."
      *                      ),
      *                      @OA\Property(
@@ -74,16 +74,44 @@ class VacanciesApplicationsController extends Controller
      *                          description="Zip code (CEP) of vacancy."
      *                      ),
      *                      @OA\Property(
-     *                          property="user_id",
-     *                          type="integer",
-     *                          example=2,
-     *                          description="User ID who published the vacancy."
-     *                      ),
-     *                      @OA\Property(
-     *                          property="deleted_at",
-     *                          type="string",
-     *                          example=null,
-     *                          description="Deletion timestamp of vacancy."
+     *                          property="user",
+     *                          type="object",
+     *                          @OA\Property(
+     *                              property="id",
+     *                              type="integer",
+     *                              description="ID of the user.",
+     *                              example="1"
+     *                          ),
+     *                          @OA\Property(
+     *                              property="name",
+     *                              type="string",
+     *                              description="Name of the user.",
+     *                              example="Erick"
+     *                          ),
+     *                          @OA\Property(
+     *                              property="email",
+     *                              type="string",
+     *                              description="Email of the user.",
+     *                              example="erick@jobs.com"
+     *                          ),
+     *                          @OA\Property(
+     *                              property="email_verified_at",
+     *                              type="string",
+     *                              description="Email verified at of the user.",
+     *                              example="erick_verify@jobs.com"
+     *                          ),
+     *                          @OA\Property(
+     *                              property="created_at",
+     *                              type="string",
+     *                              description="created at of the user.",
+     *                              example="2024-06-04T01:42:02.000000Z"
+     *                          ),
+     *                          @OA\Property(
+     *                              property="updated_at",
+     *                              type="string",
+     *                              description="updated at of the user.",
+     *                              example="2024-06-04T01:42:02.000000Z"
+     *                          ),
      *                      )
      *                  )
      *              )
@@ -95,6 +123,17 @@ class VacanciesApplicationsController extends Controller
     {
         $user = Auth::user();
         $vacancies = $user->vacancy;
+
+        $vacancies = $vacancies->map(function ($vacancy) {
+            return [
+                'id' => $vacancy->id,
+                'short_description' => $vacancy->short_description,
+                'long_description' => $vacancy->long_description,
+                'wage' => $this->format("money", $vacancy->wage),
+                'zip_code' => $vacancy->zip_code,
+                'user' => $vacancy->user,
+            ];
+        });
 
         return response()->json([
             'data' => $vacancies
