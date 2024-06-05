@@ -321,6 +321,293 @@
                 ]
             }
         },
+        "/api/vacancies_user/my_published_vacancies": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Retrieve a list of vacancies published by the authenticated user",
+                "description": "Returns a list of vacancies published by the authenticated user.",
+                "operationId": "myPublishedVacancies",
+                "responses": {
+                    "200": {
+                        "description": "A list of vacancies published by the authenticated user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID Vacancy.",
+                                                        "type": "integer",
+                                                        "example": "2"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "Creation timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "Update timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "short_description": {
+                                                        "description": "Short description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "test update"
+                                                    },
+                                                    "long_description": {
+                                                        "description": "Long description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "Fazendo teste de tal tal tal."
+                                                    },
+                                                    "wage": {
+                                                        "description": "Wage of vacancy.",
+                                                        "type": "string",
+                                                        "example": "R$ 7,77"
+                                                    },
+                                                    "zip_code": {
+                                                        "description": "Zip code (CEP) of vacancy.",
+                                                        "type": "string",
+                                                        "example": "12345678"
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "ID of the user.",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "description": "Name of the user.",
+                                                                "type": "string",
+                                                                "example": "Erick"
+                                                            },
+                                                            "email": {
+                                                                "description": "Email of the user.",
+                                                                "type": "string",
+                                                                "example": "erick@jobs.com"
+                                                            },
+                                                            "email_verified_at": {
+                                                                "description": "Email verified at of the user.",
+                                                                "type": "string",
+                                                                "example": "erick_verify@jobs.com"
+                                                            },
+                                                            "created_at": {
+                                                                "description": "created at of the user.",
+                                                                "type": "string",
+                                                                "example": "2024-06-04T01:42:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "description": "updated at of the user.",
+                                                                "type": "string",
+                                                                "example": "2024-06-04T01:42:02.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies_user/my_applications_vacancies": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Retrieve a list of vacancies published by the authenticated user",
+                "description": "Returns a list of vacancies published by the authenticated user.",
+                "operationId": "myApplications",
+                "responses": {
+                    "200": {
+                        "description": "A list of vacancies published by the authenticated user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID Vacancy.",
+                                                        "type": "integer",
+                                                        "example": "2"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "Creation timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "Update timestamp of vacancy.",
+                                                        "type": "string",
+                                                        "example": "2024-05-26T22:40:21.000000Z"
+                                                    },
+                                                    "short_description": {
+                                                        "description": "Short description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "test update"
+                                                    },
+                                                    "long_description": {
+                                                        "description": "Long description of vacancy.",
+                                                        "type": "string",
+                                                        "example": "Fazendo teste de tal tal tal."
+                                                    },
+                                                    "wage": {
+                                                        "description": "Wage of vacancy.",
+                                                        "type": "string",
+                                                        "example": "R$ 7,77"
+                                                    },
+                                                    "zip_code": {
+                                                        "description": "Zip code (CEP) of vacancy.",
+                                                        "type": "string",
+                                                        "example": "12345678"
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "ID of the user.",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "description": "Name of the user.",
+                                                                "type": "string",
+                                                                "example": "Erick"
+                                                            },
+                                                            "email": {
+                                                                "description": "Email of the user.",
+                                                                "type": "string",
+                                                                "example": "erick@jobs.com"
+                                                            },
+                                                            "email_verified_at": {
+                                                                "description": "Email verified at of the user.",
+                                                                "type": "string",
+                                                                "example": "erick_verify@jobs.com"
+                                                            },
+                                                            "created_at": {
+                                                                "description": "created at of the user.",
+                                                                "type": "string",
+                                                                "example": "2024-06-04T01:42:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "description": "updated at of the user.",
+                                                                "type": "string",
+                                                                "example": "2024-06-04T01:42:02.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/vacancies_user/to_apply_or_unapply/{vacancy_id}": {
+            "get": {
+                "tags": [
+                    "VacanciesUsers"
+                ],
+                "summary": "Apply or unapply to a vacancy",
+                "description": "Apply or unapply to a specific vacancy.",
+                "operationId": "toApplyOrUnapply",
+                "parameters": [
+                    {
+                        "name": "vacancy_id",
+                        "in": "path",
+                        "description": "ID of the vacancy.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "Action to perform (attach or detach).",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "attach",
+                                "detach"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message confirming the action.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User John applied to Vacancy XYZ"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Invalid data or action provided.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid data or action provided."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/vacancies": {
             "get": {
                 "tags": [
@@ -586,12 +873,12 @@
                                                 "short_description": {
                                                     "description": "Short description of the vacancy.",
                                                     "type": "string",
-                                                    "example": "Teste"
+                                                    "example": "Test"
                                                 },
                                                 "long_description": {
                                                     "description": "Long description of the vacancy.",
                                                     "type": "string",
-                                                    "example": "Teste de uma descrição longa"
+                                                    "example": "Test long description"
                                                 },
                                                 "wage": {
                                                     "description": "Wage of the vacancy.",
@@ -604,9 +891,39 @@
                                                     "example": "14148-300"
                                                 },
                                                 "user": {
-                                                    "description": "User registered of the vacancy.",
-                                                    "type": "string",
-                                                    "example": "Erick Rampo"
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "ID of the user.",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "description": "Name of the user.",
+                                                            "type": "string",
+                                                            "example": "Erick"
+                                                        },
+                                                        "email": {
+                                                            "description": "Email of the user.",
+                                                            "type": "string",
+                                                            "example": "erick@jobs.com"
+                                                        },
+                                                        "email_verified_at": {
+                                                            "description": "Email verified at of the user.",
+                                                            "type": "string",
+                                                            "example": "erick_verify@jobs.com"
+                                                        },
+                                                        "created_at": {
+                                                            "description": "created at of the user.",
+                                                            "type": "string",
+                                                            "example": "2024-06-04T01:42:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "description": "updated at of the user.",
+                                                            "type": "string",
+                                                            "example": "2024-06-04T01:42:02.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"

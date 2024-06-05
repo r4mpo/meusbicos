@@ -1,28 +1,28 @@
 <?php
 
-namespace Tests\Feature\Vacancies;
+namespace Tests\Feature\VacanciesUsers;
 
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
-class DeleteTest extends TestCase
+class MyPublishedVacanciesTest extends TestCase
 {
     /**
-     * Test job deletion endpoint
+     * Test search endpoint for jobs posted by a user
      * Positive feedback expected
      * 
      * @return void
      */
-    public function testDeleteVacancies(): void
+    public function testMyPublishedVacancies(): void
     {
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . Cache::get("token_php_unit"),
             'Accept' => 'application/json'
-        ])->deleteJson(env('APP_URL') . '/api/vacancies/' . Cache::get('vacancy_id_php_unit'));
+        ])->getJson(route('api.vacancies_user.my_published_vacancies'));
 
         $response->assertStatus(200)
-            ->assertJson([
-                "vacancy successfully deleted"
+            ->assertJsonStructure([
+                "data"
             ]);
     }
 }

@@ -336,13 +336,13 @@ class VacanciesController extends Controller
      *                      property="short_description",
      *                      type="string",
      *                      description="Short description of the vacancy.",
-     *                      example="Teste"
+     *                      example="Test"
      *                  ),
      *                  @OA\Property(
      *                      property="long_description",
      *                      type="string",
      *                      description="Long description of the vacancy.",
-     *                      example="Teste de uma descrição longa"
+     *                      example="Test long description"
      *                  ),
      *                  @OA\Property(
      *                      property="wage",
@@ -358,9 +358,43 @@ class VacanciesController extends Controller
      *                  ),
      *                  @OA\Property(
      *                      property="user",
-     *                      type="string",
-     *                      description="User registered of the vacancy.",
-     *                      example="Erick Rampo"
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="id",
+     *                          type="integer",
+     *                          description="ID of the user.",
+     *                          example="1"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string",
+     *                          description="Name of the user.",
+     *                          example="Erick"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string",
+     *                          description="Email of the user.",
+     *                          example="erick@jobs.com"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email_verified_at",
+     *                          type="string",
+     *                          description="Email verified at of the user.",
+     *                          example="erick_verify@jobs.com"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="created_at",
+     *                          type="string",
+     *                          description="created at of the user.",
+     *                          example="2024-06-04T01:42:02.000000Z"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="updated_at",
+     *                          type="string",
+     *                          description="updated at of the user.",
+     *                          example="2024-06-04T01:42:02.000000Z"
+     *                      ),
      *                  )
      *              )
      *          )

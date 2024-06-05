@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Cache;
 class RefreshTest extends TestCase
 {
     /**
-     * Recria o token de um usuário logado
-     * Neste endpoint, faz-se necessário passar o token
+     * Recreates a logged in user's token
+     * At this endpoint, it is necessary to pass the token
      * 
      * @return void
      */
