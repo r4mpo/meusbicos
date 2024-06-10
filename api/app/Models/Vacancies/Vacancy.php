@@ -25,4 +25,14 @@ class Vacancy extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Returns all users who applied to a vacancy
+     *
+     * @return object
+     */
+    public function users(): object
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

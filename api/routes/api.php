@@ -25,5 +25,6 @@ Route::group(['middleware' => 'api'], function () {
         Route::get('my_published_vacancies', [MyPublishedVacancies::class, 'myPublishedVacancies'])->name('api.vacancies_user.my_published_vacancies');
         Route::get('my_applications_vacancies', [Applications::class, 'myApplications'])->name('api.vacancies_user.my_applications_vacancies');
         Route::get('to_apply_or_unapply/{vacancy_id}', [Applications::class, 'toApplyOrUnapply'])->name('api.vacancies_user.to_apply_or_unapply');
+        Route::get('vacancy_applications/{vacancy_id}', [Applications::class, 'vacancyApplications'])->name('api.vacancies_user.vacancy_applications');
     });
 });

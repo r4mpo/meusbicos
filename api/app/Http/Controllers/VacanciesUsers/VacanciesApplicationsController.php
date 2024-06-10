@@ -122,7 +122,7 @@ class VacanciesApplicationsController extends Controller
     public function myApplications(): JsonResponse
     {
         $user = Auth::user();
-        $vacancies = $user->vacancy;
+        $vacancies = $user->vacancies;
 
         $vacancies = $vacancies->map(function ($vacancy) {
             return [
@@ -208,8 +208,83 @@ class VacanciesApplicationsController extends Controller
             throw new \Exception('invalid action');
         }
 
-        $user->vacancy()->$action($vacancy_id);
+        $user->vacancies()->$action($vacancy_id);
 
         return response()->json(['user ' . $user->name . ' ' . ($action == 'attach' ? 'applied' : 'disappointed') . ' to ' . $vacancy->short_description]);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/vacancies_user/vacancy_applications/{vacancy_id}",
+     *      operationId="vacancyApplications",
+     *      tags={"VacanciesUsers"},
+     *      summary="Retrieve a list of users who applied to a specific vacancy",
+     *      description="Returns a list of users who applied to a specific vacancy.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="vacancy_id",
+     *          in="path",
+     *          required=true,
+     *          description="ID of the vacancy",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="A list of users who applied to the specified vacancy.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="id",
+     *                          type="integer",
+     *                          example="1",
+     *                          description="ID of the user."
+     *                      ),
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string",
+     *                          example="John Doe",
+     *                          description="Name of the user."
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string",
+     *                          example="john@exasmple.com",
+     *                          description="Email of the user."
+     *                      ),
+     *                      @OA\Property(
+     *                          property="created_at",
+     *                          type="string",
+     *                          example="2024-06-09T12:00:00.000000Z",
+     *                          description="Creation timestamp of the user application."
+     *                      ),
+     *                      @OA\Property(
+     *                          property="updated_at",
+     *                          type="string",
+     *                          example="2024-06-09T12:00:00.000000Z",
+     *                          description="Update timestamp of the user application."
+     *                      )
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Vacancy not found"
+     *      )
+     * )
+     */
+    public function vacancyApplications($vacancy_id): JsonResponse
+    {
+        $vacancy = Vacancy::findOrFail($vacancy_id);
+        $users = $vacancy->users;
+
+        return response()->json([
+            'data' => $users
+        ]);
     }
 }

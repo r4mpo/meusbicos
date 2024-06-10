@@ -15,7 +15,8 @@
             <file>./tests/Feature/Vacancies/EditTest.php</file>
             <file>./tests/Feature/VacanciesUsers/MyApplicationsTest.php</file>
             <file>./tests/Feature/VacanciesUsers/MyPublishedVacanciesTest.php</file>
-            <file>./tests/Feature/VacanciesUsers/ToApplyOrUnapplyTest.php</file>            
+            <file>./tests/Feature/VacanciesUsers/ToApplyOrUnapplyTest.php</file>   
+            <file>./tests/Feature/VacanciesUsers/VacancyApplicationsTest.php</file>         
             <file>./tests/Feature/Vacancies/DeleteTest.php</file>
             <file>./tests/Unit/Users/Auth/RefreshTest.php</file>
             <file>./tests/Unit/Users/Auth/MeTest.php</file>
