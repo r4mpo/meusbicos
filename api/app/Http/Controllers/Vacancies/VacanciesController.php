@@ -7,6 +7,7 @@ use App\Models\Vacancies\Vacancy;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Vacancies\Create as CreateRequest;
 use App\Http\Requests\Vacancies\Update as UpdateRequest;
+use App\Services\AddressService as Address;
 use Illuminate\Http\JsonResponse;
 
 class VacanciesController extends Controller
@@ -289,12 +290,20 @@ class VacanciesController extends Controller
      *      )
      * )
      */
-    public function store(CreateRequest $request): JsonResponse
+    public function store(CreateRequest $request, Address $address): JsonResponse
     {
-        $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code', 'user_id');
+        $data = $request->only('short_description', 'long_description', 'wage', 'zip_code', 'user_id');
 
         try {
-            $vacancy = Vacancy::create($dados);
+
+
+            $data_address = $address->get("viacep.com.br/ws/" . $data['zip_code'] . "/json/");
+
+            if (!isset($data['erro'])) {
+                $address->register($data_address);
+            }
+
+            $vacancy = Vacancy::create($data);
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
@@ -541,7 +550,7 @@ class VacanciesController extends Controller
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $dados = $request->only('short_description', 'long_description', 'wage', 'zip_code');
+        $data = $request->only('short_description', 'long_description', 'wage', 'zip_code');
 
         try {
             $vacancy = Vacancy::findOrFail($id);
@@ -552,7 +561,7 @@ class VacanciesController extends Controller
                 throw new \Exception('not authorized.');
             }
 
-            $vacancy->update($dados);
+            $vacancy->update($data);
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
