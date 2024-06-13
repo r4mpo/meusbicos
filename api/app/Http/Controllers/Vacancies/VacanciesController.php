@@ -290,19 +290,12 @@ class VacanciesController extends Controller
      *      )
      * )
      */
-    public function store(CreateRequest $request, Address $address): JsonResponse
+    public function store(CreateRequest $request): JsonResponse
     {
         $data = $request->only('short_description', 'long_description', 'wage', 'zip_code', 'user_id');
 
         try {
-
-
-            $data_address = $address->get("viacep.com.br/ws/" . $data['zip_code'] . "/json/");
-
-            if (!isset($data['erro'])) {
-                $address->register($data_address);
-            }
-
+            $this->registerAddressVacancy($data['zip_code']);
             $vacancy = Vacancy::create($data);
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
@@ -404,6 +397,70 @@ class VacanciesController extends Controller
      *                          description="updated at of the user.",
      *                          example="2024-06-04T01:42:02.000000Z"
      *                      ),
+     *                  ),
+     *                  @OA\Property(
+     *                      property="zip",
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="zip_code",
+     *                          type="string",
+     *                          description="code of the zip.",
+     *                          example="14085-440"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="street",
+     *                          type="string",
+     *                          description="street of the zip.",
+     *                          example="Avenida Capitão Salomão"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="complement",
+     *                          type="string",
+     *                          description="Complement of the zip.",
+     *                          example="Perto do mercado x"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="neighborhood",
+     *                          type="string",
+     *                          description="neighborhood of the zip.",
+     *                          example="Campos Elíseos"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="locality",
+     *                          type="string",
+     *                          description="city of the zip.",
+     *                          example="Ribeirão Preto"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="uf",
+     *                          type="string",
+     *                          description="uf the zip.",
+     *                          example="SP"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="ibge",
+     *                          type="integer",
+     *                          description="ibge code of the zip.",
+     *                          example="3543402"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="gia",
+     *                          type="integer",
+     *                          description="gia code of the zip.",
+     *                          example="5824"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="ddd",
+     *                          type="integer",
+     *                          description="ddd code of the zip.",
+     *                          example="16"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="siafi",
+     *                          type="integer",
+     *                          description="siafi code of the zip.",
+     *                          example="6969"
+     *                      )
      *                  )
      *              )
      *          )
@@ -424,7 +481,7 @@ class VacanciesController extends Controller
                 'short_description' => $vacancy->short_description,
                 'long_description' => $vacancy->long_description,
                 'wage' => $this->format("money", $vacancy->wage),
-                'zip_code' => $this->format("zip_code", $vacancy->zip_code),
+                'zip' => $vacancy->zip(),
                 'user' => $vacancy->user
             ]]);
         } catch (\Exception $e) {
@@ -561,6 +618,10 @@ class VacanciesController extends Controller
                 throw new \Exception('not authorized.');
             }
 
+            if (isset($data['zip_code']) && $vacancy->zip_code != $data['zip_code']) {
+                $this->registerAddressVacancy($data['zip_code']);
+            }
+
             $vacancy->update($data);
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
@@ -626,5 +687,17 @@ class VacanciesController extends Controller
         } catch (\Exception $e) {
             return response()->json(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
+    }
+
+    private function registerAddressVacancy($zip_code): Object
+    {
+        $address = new Address;
+        $data_address = $address->get("viacep.com.br/ws/" . $zip_code . "/json/");
+
+        if (!isset($data['erro'])) {
+            $address->register($data_address);
+        }
+
+        return $address;
     }
 }

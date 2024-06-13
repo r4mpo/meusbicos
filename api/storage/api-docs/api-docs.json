@@ -1000,6 +1000,61 @@
                                                         }
                                                     },
                                                     "type": "object"
+                                                },
+                                                "zip": {
+                                                    "properties": {
+                                                        "zip_code": {
+                                                            "description": "code of the zip.",
+                                                            "type": "string",
+                                                            "example": "14085-440"
+                                                        },
+                                                        "street": {
+                                                            "description": "street of the zip.",
+                                                            "type": "string",
+                                                            "example": "Avenida Capitão Salomão"
+                                                        },
+                                                        "complement": {
+                                                            "description": "Complement of the zip.",
+                                                            "type": "string",
+                                                            "example": "Perto do mercado x"
+                                                        },
+                                                        "neighborhood": {
+                                                            "description": "neighborhood of the zip.",
+                                                            "type": "string",
+                                                            "example": "Campos Elíseos"
+                                                        },
+                                                        "locality": {
+                                                            "description": "city of the zip.",
+                                                            "type": "string",
+                                                            "example": "Ribeirão Preto"
+                                                        },
+                                                        "uf": {
+                                                            "description": "uf the zip.",
+                                                            "type": "string",
+                                                            "example": "SP"
+                                                        },
+                                                        "ibge": {
+                                                            "description": "ibge code of the zip.",
+                                                            "type": "integer",
+                                                            "example": "3543402"
+                                                        },
+                                                        "gia": {
+                                                            "description": "gia code of the zip.",
+                                                            "type": "integer",
+                                                            "example": "5824"
+                                                        },
+                                                        "ddd": {
+                                                            "description": "ddd code of the zip.",
+                                                            "type": "integer",
+                                                            "example": "16"
+                                                        },
+                                                        "siafi": {
+                                                            "description": "siafi code of the zip.",
+                                                            "type": "integer",
+                                                            "example": "6969"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"

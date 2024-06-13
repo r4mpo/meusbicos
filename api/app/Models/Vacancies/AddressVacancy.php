@@ -2,10 +2,10 @@
 
 namespace App\Models\Vacancies;
 
+use App\Models\ModelDefault;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class AddressVacancy extends Model
+class AddressVacancy extends ModelDefault
 {
     use HasFactory;
 
