@@ -20,23 +20,29 @@ class AddressService implements ApiDataInterface
         return (array) json_decode($response);
     }
 
-    public function register($data): Object
+    public function register($data): object
     {
-        $address = new AddressVacancy;
+        $zip_code = preg_replace('/\D/', '', $data['cep']);
 
-        $address->zip_code = preg_replace('/\D/', '', $data['cep']);
-        $address->street = $data['logradouro'];
-        $address->complement = $data['complemento'];
-        $address->neighborhood = $data['bairro'];
-        $address->locality = $data['localidade'];
-        $address->uf = $data['uf'];
-        $address->ibge = $data['ibge'];
-        $address->gia = $data['gia'];
-        $address->ddd = $data['ddd'];
-        $address->siafi = $data['siafi'];
+        if ($address = AddressVacancy::where('zip_code', $zip_code)->first()) {
+            return $address;
+        }
 
-        $address->save();
+        $new_address = new AddressVacancy;
 
-        return $address;
+        $new_address->zip_code = $zip_code;
+        $new_address->street = $data['logradouro'];
+        $new_address->complement = $data['complemento'];
+        $new_address->neighborhood = $data['bairro'];
+        $new_address->locality = $data['localidade'];
+        $new_address->uf = $data['uf'];
+        $new_address->ibge = $data['ibge'];
+        $new_address->gia = $data['gia'];
+        $new_address->ddd = $data['ddd'];
+        $new_address->siafi = $data['siafi'];
+
+        $new_address->save();
+
+        return $new_address;
     }
 }

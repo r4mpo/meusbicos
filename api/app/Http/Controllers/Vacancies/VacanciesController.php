@@ -689,15 +689,19 @@ class VacanciesController extends Controller
         }
     }
 
-    private function registerAddressVacancy($zip_code): Object
+    public function registerAddressVacancy($zip_code): array
     {
         $address = new Address;
         $data_address = $address->get("viacep.com.br/ws/" . $zip_code . "/json/");
 
         if (!isset($data['erro'])) {
-            $address->register($data_address);
+            $address = $address->register($data_address);
         }
 
-        return $address;
+        try {
+            return $address->toArray();
+        } catch (\Exception $exception) {
+            return ['error' => true];
+        }
     }
 }
