@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Users;
 use  App\Http\Requests\Users\Create as Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Users\Info;
 
 class AuthController extends Controller
 {
@@ -149,7 +150,7 @@ class AuthController extends Controller
      * )
      *
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function me()
     {
         return response()->json(auth()->user());
@@ -175,7 +176,7 @@ class AuthController extends Controller
      * )
      *
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function logout()
     {
         auth()->logout();
@@ -205,7 +206,7 @@ class AuthController extends Controller
      * )
      *
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
@@ -216,7 +217,7 @@ class AuthController extends Controller
      *
      * @param $token
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -224,5 +225,30 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function getInfos($user_id = null)
+    {
+        $user_id = is_null($user_id) ? auth()->id() : $user_id;
+        $infos = Info::where('user_id', $user_id)->get();
+
+        $infos = $infos->map(function ($info) {
+
+            $id   = $info->id;
+            $data = $info->info;
+            $type = $info->getTypeInfo();
+
+            if (in_array($type, ['phone', 'zip_code', 'money', 'cpf', 'cnpj', 'rg'])) {
+                $data = $this->format($type, $data);
+            }
+
+            return [
+                'id' => $id,
+                'info' => $data,
+                'type' => $type
+            ];
+        });
+
+        return response()->json(['data' => $infos]);
     }
 }

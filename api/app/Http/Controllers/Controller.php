@@ -31,17 +31,14 @@ class Controller extends BaseController
 
     public function format($type = "", $string, $size = 10): string
     {
-        $string = preg_replace("[^0-9]", "", $string);
+        $string = preg_replace("/[^0-9]/", "", $string); // Corrigido para adicionar delimitadores válidos para expressão regular
 
         switch ($type) {
-
-            case 'fone':
+            case 'phone':
                 if ($size === 10) {
-                    $string = '(' . substr($type, 0, 2) . ') ' . substr($type, 2, 4)
-                        . '-' . substr($type, 6);
+                    $string = '(' . substr($string, 0, 2) . ') ' . substr($string, 2, 4) . '-' . substr($string, 6);
                 } elseif ($size === 11) {
-                    $string = '(' . substr($type, 0, 2) . ') ' . substr($type, 2, 5)
-                        . '-' . substr($type, 7);
+                    $string = '(' . substr($string, 0, 2) . ') ' . substr($string, 2, 5) . '-' . substr($string, 7);
                 }
                 break;
 
@@ -54,23 +51,19 @@ class Controller extends BaseController
                 break;
 
             case 'cpf':
-                $string = substr($string, 0, 3) . '.' . substr($string, 3, 3) .
-                    '.' . substr($string, 6, 3) . '-' . substr($string, 9, 2);
+                $string = substr($string, 0, 3) . '.' . substr($string, 3, 3) . '.' . substr($string, 6, 3) . '-' . substr($string, 9, 2);
                 break;
 
             case 'cnpj':
-                $string = substr($string, 0, 2) . '.' . substr($string, 2, 3) .
-                    '.' . substr($string, 5, 3) . '/' .
-                    substr($string, 8, 4) . '-' . substr($string, 12, 2);
+                $string = substr($string, 0, 2) . '.' . substr($string, 2, 3) . '.' . substr($string, 5, 3) . '/' . substr($string, 8, 4) . '-' . substr($string, 12, 2);
                 break;
 
             case 'rg':
-                $string = substr($string, 0, 2) . '.' . substr($string, 2, 3) .
-                    '.' . substr($string, 5, 3);
+                $string = substr($string, 0, 2) . '.' . substr($string, 2, 3) . '.' . substr($string, 5, 3);
                 break;
 
             default:
-                $string = 'It is necessary to define a type (fone, zip_code, cpg, cnpj, rg)';
+                $string = 'It is necessary to define a type (phone, zip_code, cpf, cnpj, rg)';
                 break;
         }
 

@@ -411,25 +411,25 @@ class VacanciesController extends Controller
      *                          property="street",
      *                          type="string",
      *                          description="street of the zip.",
-     *                          example="Avenida Capitão Salomão"
+     *                          example="Captain Solomon Avenue"
      *                      ),
      *                      @OA\Property(
      *                          property="complement",
      *                          type="string",
      *                          description="Complement of the zip.",
-     *                          example="Perto do mercado x"
+     *                          example="Close to the market x"
      *                      ),
      *                      @OA\Property(
      *                          property="neighborhood",
      *                          type="string",
      *                          description="neighborhood of the zip.",
-     *                          example="Campos Elíseos"
+     *                          example="Elysian Fields"
      *                      ),
      *                      @OA\Property(
      *                          property="locality",
      *                          type="string",
      *                          description="city of the zip.",
-     *                          example="Ribeirão Preto"
+     *                          example="Central City"
      *                      ),
      *                      @OA\Property(
      *                          property="uf",

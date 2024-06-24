@@ -6,12 +6,14 @@ use App\SwaggerComments as Swagger;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VacanciesUsers\MyPublishedVacanciesController as MyPublishedVacancies;
 use App\Http\Controllers\VacanciesUsers\VacanciesApplicationsController as Applications;
+use App\Http\Controllers\Users\InfosController as Infos;
 
 Route::post('documentation', [Swagger::class, 'documentation'])->name('api.documentation.swagger');
 
 Route::group(['middleware' => 'api'], function () {
 
     Route::resource('vacancies', Vacancy::class);
+    Route::resource('infos', Infos::class);
 
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', [Auth::class, 'login'])->name('api.auth.login');
@@ -19,6 +21,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('logout', [Auth::class, 'logout'])->name('api.auth.logout');
         Route::post('refresh', [Auth::class, 'refresh'])->name('api.auth.refresh');
         Route::post('me', [Auth::class, 'me'])->name('api.auth.me');
+        Route::get('infos/{user_id?}', [Auth::class, 'getInfos'])->name('api.auth.infos');
     });
 
     Route::group(['prefix' => 'vacancies_user'], function () {

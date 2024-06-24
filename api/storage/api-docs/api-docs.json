@@ -1011,22 +1011,22 @@
                                                         "street": {
                                                             "description": "street of the zip.",
                                                             "type": "string",
-                                                            "example": "Avenida Capitão Salomão"
+                                                            "example": "Captain Solomon Avenue"
                                                         },
                                                         "complement": {
                                                             "description": "Complement of the zip.",
                                                             "type": "string",
-                                                            "example": "Perto do mercado x"
+                                                            "example": "Close to the market x"
                                                         },
                                                         "neighborhood": {
                                                             "description": "neighborhood of the zip.",
                                                             "type": "string",
-                                                            "example": "Campos Elíseos"
+                                                            "example": "Elysian Fields"
                                                         },
                                                         "locality": {
                                                             "description": "city of the zip.",
                                                             "type": "string",
-                                                            "example": "Ribeirão Preto"
+                                                            "example": "Central City"
                                                         },
                                                         "uf": {
                                                             "description": "uf the zip.",
