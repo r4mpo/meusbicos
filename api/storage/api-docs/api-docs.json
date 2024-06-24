@@ -103,7 +103,7 @@
                 ],
                 "summary": "Creates a new user.",
                 "description": "Creates a new user.",
-                "operationId": "createUser",
+                "operationId": "user_store",
                 "requestBody": {
                     "description": "Informações do usuário",
                     "required": true,
@@ -306,6 +306,363 @@
                                         "expires_in": {
                                             "type": "integer",
                                             "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/infos/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user's infos",
+                "description": "Retrieve all infos belonging to the specified user.",
+                "operationId": "getInfos",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID of the user whose infos are to be retrieved. If not provided, retrieves infos for the authenticated user.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of infos retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID of the info.",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "info": {
+                                                        "description": "Formatted information content.",
+                                                        "type": "string",
+                                                        "example": "Formatted info content"
+                                                    },
+                                                    "type": {
+                                                        "description": "Type of the info.",
+                                                        "type": "string",
+                                                        "example": "phone"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No infos found for the specified user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No infos found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/infos": {
+            "post": {
+                "tags": [
+                    "Infos"
+                ],
+                "summary": "Create a new info",
+                "description": "Create a new info with the provided data.",
+                "operationId": "infos_store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "Code of the info.",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "info": {
+                                        "description": "Information content.",
+                                        "type": "string",
+                                        "example": "14920388."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Info created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the created info.",
+                                                    "type": "integer",
+                                                    "example": "8"
+                                                },
+                                                "code": {
+                                                    "description": "code of the created info.",
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "info": {
+                                                    "description": "info of the created info.",
+                                                    "type": "string",
+                                                    "example": "14920388"
+                                                },
+                                                "user_id": {
+                                                    "description": "user_id of the created info.",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "updated_at": {
+                                                    "description": "updated_at of the created info.",
+                                                    "type": "string",
+                                                    "example": "2024-06-24T22:24:25.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "description": "created_at of the created info.",
+                                                    "type": "string",
+                                                    "example": "2024-06-24T22:24:25.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "There was a problem registering the info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "There was a problem registering the info."
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal server error."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/infos/{id}": {
+            "put": {
+                "tags": [
+                    "Infos"
+                ],
+                "summary": "Update info",
+                "description": "Update info with the provided data.",
+                "operationId": "infos_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the info to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "Code of the info.",
+                                        "type": "string",
+                                        "example": "3"
+                                    },
+                                    "info": {
+                                        "description": "Information content.",
+                                        "type": "string",
+                                        "example": "Updated information content."
+                                    },
+                                    "user_id": {
+                                        "description": "ID of the user updating the info.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Info updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the updated info.",
+                                                    "type": "integer",
+                                                    "example": "8"
+                                                },
+                                                "code": {
+                                                    "description": "Code of the updated info.",
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "info": {
+                                                    "description": "Information content of the updated info.",
+                                                    "type": "string",
+                                                    "example": "Updated information content."
+                                                },
+                                                "user_id": {
+                                                    "description": "ID of the user who updated the info.",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Date and time of the last update.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-24T22:30:45.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "description": "Date and time of creation.",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-24T22:24:25.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid info: unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid info: unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "There was a problem updating the info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "There was a problem updating the info."
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal server error."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
                                         }
                                     },
                                     "type": "object"
@@ -691,7 +1048,7 @@
                 ],
                 "summary": "Retrieve a list of vacancies",
                 "description": "Returns a paginated list of vacancies optionally filtered by parameters.",
-                "operationId": "index",
+                "operationId": "vacancies_index",
                 "parameters": [
                     {
                         "name": "zip_code",
@@ -812,7 +1169,7 @@
                 ],
                 "summary": "Create a new vacancy",
                 "description": "Create a new vacancy with the provided data.",
-                "operationId": "store",
+                "operationId": "vacancies_store",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -920,7 +1277,7 @@
                 ],
                 "summary": "Retrieve a single vacancy",
                 "description": "Retrieve details of a single vacancy by its ID.",
-                "operationId": "show",
+                "operationId": "vacancies_show",
                 "parameters": [
                     {
                         "name": "id",
@@ -1081,7 +1438,7 @@
                 ],
                 "summary": "Update an existing vacancy",
                 "description": "Update an existing vacancy with the provided data.",
-                "operationId": "update",
+                "operationId": "vacancies_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -1204,7 +1561,7 @@
                 ],
                 "summary": "Delete a vacancy",
                 "description": "Delete a vacancy by its ID.",
-                "operationId": "destroy",
+                "operationId": "vacancies_destroy",
                 "parameters": [
                     {
                         "name": "id",

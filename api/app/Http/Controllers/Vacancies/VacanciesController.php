@@ -20,7 +20,7 @@ class VacanciesController extends Controller
     /**
      * @OA\Get(
      *      path="/api/vacancies",
-     *      operationId="index",
+     *      operationId="vacancies_index",
      *      tags={"Vacancies"},
      *      summary="Retrieve a list of vacancies",
      *      description="Returns a paginated list of vacancies optionally filtered by parameters.",
@@ -194,7 +194,7 @@ class VacanciesController extends Controller
     /**
      * @OA\Post(
      *      path="/api/vacancies",
-     *      operationId="store",
+     *      operationId="vacancies_store",
      *      tags={"Vacancies"},
      *      summary="Create a new vacancy",
      *      description="Create a new vacancy with the provided data.",
@@ -307,7 +307,7 @@ class VacanciesController extends Controller
     /**
      * @OA\Get(
      *      path="/api/vacancies/{id}",
-     *      operationId="show",
+     *      operationId="vacancies_show",
      *      tags={"Vacancies"},
      *      summary="Retrieve a single vacancy",
      *      description="Retrieve details of a single vacancy by its ID.",
@@ -492,7 +492,7 @@ class VacanciesController extends Controller
     /**
      * @OA\Put(
      *      path="/api/vacancies/{id}",
-     *      operationId="update",
+     *      operationId="vacancies_update",
      *      tags={"Vacancies"},
      *      summary="Update an existing vacancy",
      *      description="Update an existing vacancy with the provided data.",
@@ -633,7 +633,7 @@ class VacanciesController extends Controller
     /**
      * @OA\Delete(
      *      path="/api/vacancies/{id}",
-     *      operationId="destroy",
+     *      operationId="vacancies_destroy",
      *      tags={"Vacancies"},
      *      summary="Delete a vacancy",
      *      description="Delete a vacancy by its ID.",

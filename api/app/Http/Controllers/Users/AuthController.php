@@ -67,7 +67,7 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *      path="/api/auth/register",
-     *      operationId="createUser",
+     *      operationId="user_store",
      *      tags={"Users"},
      *      summary="Creates a new user.",
      *      description="Creates a new user.",
@@ -227,6 +227,78 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/auth/infos/{user_id}",
+     *      operationId="getInfos",
+     *      tags={"Users"},
+     *      summary="Get user's infos",
+     *      description="Retrieve all infos belonging to the specified user.",
+     *      security={{"bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="user_id",
+     *          in="path",
+     *          required=false,
+     *          description="ID of the user whose infos are to be retrieved. If not provided, retrieves infos for the authenticated user.",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="List of infos retrieved successfully.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="id",
+     *                          type="integer",
+     *                          description="ID of the info.",
+     *                          example="1"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="info",
+     *                          type="string",
+     *                          description="Formatted information content.",
+     *                          example="Formatted info content"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="type",
+     *                          type="string",
+     *                          description="Type of the info.",
+     *                          example="phone"
+     *                      )
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Unauthenticated."
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="No infos found for the specified user.",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="No infos found."
+     *              )
+     *          )
+     *      )
+     * )
+     */
     public function getInfos($user_id = null)
     {
         $user_id = is_null($user_id) ? auth()->id() : $user_id;
