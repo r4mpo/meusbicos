@@ -198,6 +198,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         /**Swagger */
         L5Swagger\L5SwaggerServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 
