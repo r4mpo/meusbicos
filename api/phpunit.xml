@@ -18,6 +18,8 @@
             <file>./tests/Feature/VacanciesUsers/ToApplyOrUnapplyTest.php</file>   
             <file>./tests/Feature/VacanciesUsers/VacancyApplicationsTest.php</file>         
             <file>./tests/Feature/Vacancies/DeleteTest.php</file>
+            <file>./tests/Feature/Infos/CreateTest.php</file>
+            <file>./tests/Feature/Infos/EditTest.php</file>
             <file>./tests/Unit/Users/Auth/RefreshTest.php</file>
             <file>./tests/Unit/AddressVacancy/RegisterAddressVacancyTest.php</file>         
             <file>./tests/Unit/Users/Auth/MeTest.php</file>
