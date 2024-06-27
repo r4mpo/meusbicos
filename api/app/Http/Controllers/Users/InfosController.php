@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Infos\Create;
 use App\Http\Requests\Users\Infos\Update;
 use App\Models\Users\Info;
-use Illuminate\Http\Request;
 
 class InfosController extends Controller
 {

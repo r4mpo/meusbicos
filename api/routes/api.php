@@ -7,13 +7,27 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VacanciesUsers\MyPublishedVacanciesController as MyPublishedVacancies;
 use App\Http\Controllers\VacanciesUsers\VacanciesApplicationsController as Applications;
 use App\Http\Controllers\Users\InfosController as Infos;
+use App\Http\Middleware\ValidatePermissions;
 
 Route::post('documentation', [Swagger::class, 'documentation'])->name('api.documentation.swagger');
 
 Route::group(['middleware' => 'api'], function () {
 
-    Route::resource('vacancies', Vacancy::class);
-    Route::resource('infos', Infos::class);
+    Route::group(['prefix' => 'vacancies', 'middleware' => 'permissions'], function () {
+        Route::get('/', [Vacancy::class, 'index'])->name('api.vacancies.index');
+        Route::post('/', [Vacancy::class, 'store'])->name('api.vacancies.store');
+        Route::get('/{vacancy}', [Vacancy::class, 'show'])->name('api.vacancies.show');
+        Route::put('/{vacancy}', [Vacancy::class, 'update'])->name('api.vacancies.update');
+        Route::delete('/{vacancy}', [Vacancy::class, 'destroy'])->name('api.vacancies.destroy');
+    });
+
+    Route::group(['prefix' => 'infos'], function () {
+        Route::get('/', [Infos::class, 'index'])->name('api.infos.index');
+        Route::post('/', [Infos::class, 'store'])->name('api.infos.store');
+        Route::get('/{info}', [Infos::class, 'show'])->name('api.infos.show');
+        Route::put('/{info}', [Infos::class, 'update'])->name('api.infos.update');
+        Route::delete('/{info}', [Infos::class, 'destroy'])->name('api.infos.destroy');
+    });
 
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', [Auth::class, 'login'])->name('api.auth.login');
