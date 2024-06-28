@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Users\Permission;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,12 +18,20 @@ class ValidatePermissions
     public function handle(Request $request, Closure $next): Response
     {
         $route = Route::currentRouteName();
-        $user = auth()->user();
+        $list_routes_names_free = ['api.auth.login', 'api.auth.create'];
+        
+        if(!in_array($route, $list_routes_names_free)){
+            $user = auth()->user();
+            $permission = Permission::where('name', $route)->first();
 
-        $permission = $user->can($route);
+            if($user && $permission)
+            {
+                $authorized = $user->can($permission->name);
 
-        if(!$permission){
-            throw new \Exception('unauthorized access route');
+                if(!$authorized){
+                    throw new \Exception('unauthorized access route');
+                }
+            }
         }
 
         return $next($request);

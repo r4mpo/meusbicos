@@ -11,9 +11,8 @@ use App\Http\Middleware\ValidatePermissions;
 
 Route::post('documentation', [Swagger::class, 'documentation'])->name('api.documentation.swagger');
 
-Route::group(['middleware' => 'api'], function () {
-
-    Route::group(['prefix' => 'vacancies', 'middleware' => 'permissions'], function () {
+Route::middleware(['api', 'permissions'])->group(function () {
+    Route::group(['prefix' => 'vacancies'], function () {
         Route::get('/', [Vacancy::class, 'index'])->name('api.vacancies.index');
         Route::post('/', [Vacancy::class, 'store'])->name('api.vacancies.store');
         Route::get('/{vacancy}', [Vacancy::class, 'show'])->name('api.vacancies.show');
